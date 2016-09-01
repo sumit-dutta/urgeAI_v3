@@ -10,6 +10,10 @@ __pycache__/
 env/
 bin/
 include/
+venv/
+urgeAI_v2/
+grouped.txt
+.idea/
 local/
 build/
 develop-eggs/
