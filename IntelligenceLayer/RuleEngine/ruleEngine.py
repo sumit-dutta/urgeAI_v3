@@ -50,10 +50,13 @@ def computeAccentuateScores(record, userPrefs, scores = rp.scores, rules = rp.ru
 def computeSkinToneScores(record, skinTone, colors, scores = sk.scores):
     score = 0
     count = 0
+    msg = ""
     for color in record["Color"]:
         if color in diff(scores[skinTone].keys(), colors):
             score = 1
-    return score,"SK"
+            msg = "SK"
+
+    return score,msg
 
 
 #old logic
@@ -69,11 +72,13 @@ def computeSkinToneScores(record, skinTone, colors, scores = sk.scores):
 def computeColorScores(record, colors):
     score = 0
     count = 0
+    msg = ''
     for color in colors:
         if color in record["Color"]:
             score = 1
+            msg = "C"
 
-    return score,"C"
+    return score,msg
 
 def diff(first, second):
     second = set(second)
