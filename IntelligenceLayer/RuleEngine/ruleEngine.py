@@ -53,10 +53,13 @@ def computeSkinToneScores(record, skinTone, colors, scores = sk.scores):
     msg = ""
     for color in record["Color"]:
         if color in diff(scores[skinTone].keys(), colors):
-            score = 1
+            score = score + scores[skinTone][color]
+            count = count + 1
             msg = "SK"
 
-    return score,msg
+    if count==0:
+        count = count + 1
+    return score/count,msg
 
 
 #old logic

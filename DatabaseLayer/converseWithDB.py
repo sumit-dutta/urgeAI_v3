@@ -160,11 +160,12 @@ def getFullDataWithColorsAndCategoryFromDomain(dbName, collectionName, domain, c
     result = collection.find(finalQuery)
     return result
 
-def getFullDataWithColorsAndTypesFromDomain(dbName, collectionName, domain, colors, types):
+def getFullDataWithColorsAndTypesFromDomain(dbName, collectionName, domains, colors, types):
     db = client[dbName]
     collection = db[collectionName]
     conditionListForColor = []
     conditionListForType = []
+    conditionListForDomain = []
     for color in colors:
         condition = {"Color": {"$elemMatch":{"$eq":color}}}
         conditionListForColor.append(condition)
@@ -172,10 +173,42 @@ def getFullDataWithColorsAndTypesFromDomain(dbName, collectionName, domain, colo
     for type in types:
         condition = {"Type": type}
         conditionListForType.append(condition)
-    finalQuery = {"$and":[{"$or": conditionListForColor}, {"$or": conditionListForType}, {"Domain": domain}]}
+
+    for domain in domains:
+        condition = {"Domain": domain}
+        conditionListForDomain.append(condition)
+
+    finalQuery = {"$and":[{"$or": conditionListForColor}, {"$or": conditionListForType}, {"$or": conditionListForDomain}]}
     print finalQuery
     result = collection.find(finalQuery)
     return result
+
+
+
+
+def getFullDataWithColorsAndSubCategoryFromDomain(dbName, collectionName, domains, colors, subCats):
+    db = client[dbName]
+    collection = db[collectionName]
+    conditionListForColor = []
+    conditionListForSubCat = []
+    conditionListForDomain = []
+    for color in colors:
+        condition = {"Color": {"$elemMatch":{"$eq":color}}}
+        conditionListForColor.append(condition)
+
+    for subCat in subCats:
+        condition = {"Sub_category": subCat}
+        conditionListForSubCat.append(condition)
+
+    for domain in domains:
+        condition = {"Domain": domain}
+        conditionListForDomain.append(condition)
+
+    finalQuery = {"$and":[{"$or": conditionListForColor}, {"$or": conditionListForSubCat}, {"$or": conditionListForDomain}]}
+    print finalQuery
+    result = collection.find(finalQuery)
+    return result
+
 
 
 

@@ -4,7 +4,7 @@ import RuleRepository.looksmashStandards as ls
 import RuleRepository.skinToneRules as sk
 import DatabaseLayer.dataNormalization as dn
 import random
-
+import RuleRepository.normalizationRules as nr
 
 
 
@@ -12,25 +12,27 @@ import random
 #
 # cdb.renameFieldInDocument("looksmash_rules", "rules", "arms.3/4 sleeves", "arms.3/4th Sleeves")
 #
-test = cstd.getStandardValues("looksmash_standards","attributes", "Type")
+# test = cdb.getColumnValues("looksmash_db","amazon_data", "Sub_category")
+# print test
+#
+# looksmash_normals = nr.sub_categories_dict.keys()
+# print looksmash_normals
+#
+# outliers = []
+# for subCat in test:
+#
+#     print subCat
+#     if subCat not in looksmash_normals:
+#         outliers.append(subCat)
+#
+#
+# print outliers
+# print random.randint(0,0
+#
+test = cdb.getColumnValues("looksmash_db", "flipkart_data", "Sub_category")
 print test
 
-# print random.randint(0,0)
-#
-# test = [1,1,3,44,5,6,7,5,3,2,1,2,3,4,5,6,7,4,3]
-#
-# group = {}
-#
-# for value in test:
-#     if value not in group.keys():
-#         group[value] = {
-#             "test":[]
-#         }
-#
-#     group[value]["test"].append(value)
-#
-#
-# print group.keys()
+
 #
 # sub_categories_dict = dict.fromkeys(['a', 'b'], ls.Sub_Category.Sport_Shoes.value)
 # print sub_categories_dict

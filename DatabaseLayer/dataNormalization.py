@@ -108,6 +108,8 @@ def type_replace(typ, type_dict):
 
 
 def normalize_data(document):
+
+    print "---------------------------start---------------------------------"
     print document
     doc = document
     if 'Color' in document.keys():
@@ -123,6 +125,7 @@ def normalize_data(document):
     if 'Type' in document.keys():
         doc= normalize_type(doc, nr.types_dict)
     print doc
+    print "----------------------------end------------------------------------"
     #cdb.replaceDocument("looksmash_db", "looksmash_women", doc)
     return doc
 

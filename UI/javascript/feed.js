@@ -96,8 +96,8 @@ $(document).ready(function(){
              console.log(obj)
              $.each(obj, function(k, v) {
             //display the key and value pair
-            console.log(k + ' is ' + v);
-            $( ".result" ).append( "<div class='item'><a href='" +v.url+ "' target='_blank'><img class='image' src='" + v.image + "'><span class='msg'>"+ v.msg +"</span></a></div>" );
+            console.log(k + ' is ' + v)
+            $( ".result" ).append( "<div class='item'><a href='" +v.url+ "' target='_blank'><img class='image' src='" + v.image + "'><span class='domain'>" +  v.domain +"</span><span class='msg'>"+ v.msg +"</span></a></div>" );
             });
         }
       })

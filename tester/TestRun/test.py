@@ -1,18 +1,12 @@
-import IntelligenceLayer.RuleEngine.ruleEngine as re
-import Utilities.RulesUtils.ruleUtils as ru
-import DatabaseLayer.dataNormalization as dn
+import json
+
 import DatabaseLayer.converseWithDB as cdb
-import RuleRepository.looksmashStandards as ls
+import DatabaseLayer.dataNormalization as dn
 import IntelligenceLayer.Messaging.messagingEngine as me
-import json
-from operator import itemgetter
-import itertools
-import urllib, cStringIO
+import IntelligenceLayer.RuleEngine.ruleEngine as re
+import RuleRepository.looksmashStandards as ls
+import Utilities.RulesUtils.ruleUtils as ru
 import random
-import json
-
-
-
 
 
 #print re.computeAccentuateScores(data, userPrefs)
@@ -39,13 +33,11 @@ import json
 #         print doc
 #         print score
 
-
 def getCategoryValueIndex(value, grouped_data, category):
     ind = -1
     if len(grouped_data[value][category])>0 and float(value) > 0:
         ind = random.randint(0,len(grouped_data[value][category])-1)
     return ind
-
 
 def testFeed(userprefs):
     print userprefs
@@ -74,15 +66,15 @@ def testFeed(userprefs):
     colors = userprefs['colors']
     types = userprefs['types']
     skinTone = userprefs['skinTone']
+    domains = ["Jabong"]
 
 
 
-
-    jabong_data =  cdb.getFullDataWithColorsAndTypesFromDomain("looksmash_db", "looksmash_women", "Jabong", ru.getColorList(colors,skinTone), types)
+    jabong_data =  cdb.getFullDataWithColorsAndTypesFromDomain("looksmash_db", "looksmash_women", domains, ru.getColorList(colors,skinTone), types)
     scored_data = []
     grouped_data = {}
     for doc in jabong_data:
-        doc = dn.normalize_data(doc)
+        #doc = dn.normalize_data(doc)
         accentuateScore, accentuateMsg = re.computeAccentuateScores(doc, bodyPrefs, scores)
         colorScore, colorMsg = re.computeColorScores(doc, colors)
         skinToneScore, skinToneMsg = re.computeSkinToneScores(doc,skinTone,colors)
@@ -151,7 +143,8 @@ def testFeed(userprefs):
     for product in feed:
         images[i]={"image" :product["Image"],
                    "msg" : product["msg"],
-                   "url" : product["Url"]
+                   "url" : product["Url"],
+                   "domain": product["Domain"]
                    }
         i = i+1
 

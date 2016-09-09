@@ -102,7 +102,7 @@ v_neck = ["V Neck", "V neck", "V Neck", "V Neck Single", "V Neck", "V-Neck", "Ro
 nehru_collar = ["Nehru Collar", "NEHRU COLLAR"]
 boat_neck = ["Square Neck", "Boat Neck", "Boat Neck", "Boat Neck", "Square Neck", "Square neck", "Sqaure Neck", "Sqaure Neck", "Boat Neck Combo"]
 henley = ["High neck", "Henley", "Keyhole Neck", "High Neck", "Turtle Neck", "Henley"]
-polo_t_shirts = ["Polo Neck", "Polos", "Polo T-Shirts", "Polo"]
+polo_t_shirts = ["Polo Neck", "Polos", "Polo T-Shirts", "Polo", "Polo T-shirts"]
 spaghetti_neck = ["Hooded", "SPAGHETTI NECK", "Hood"]
 sweetheart_neck = ["Sweetheart Neck", "Peterpan Collar", "Sweetheart Neck"]
 peterpan_collar_combo = []
@@ -178,7 +178,8 @@ sports_shoes = ["Walking shoe",
                 "Training Shoes"]
 
 maxis = ["Maxi Dresses",
-         "Maxi"]
+         "Maxi",
+         "Maxis"]
 
 midis=["Midi"]
 
@@ -219,10 +220,12 @@ quilted_jackets=["Quilted Jackets"]
 winter_jackets=[" Winter Jackets"]
 
 single_breasted_blazers=["Single Breasted Blazer",
-                         "Single Breasted"]
+                         "Single Breasted",
+                         "Single Breasted Blazers"]
 
 tuxedo_style_blazer=["Tuxedo Style",
-                     "Tuxedo"]
+                     "Tuxedo",
+                     "Tuxedo Style Blazer"]
 
 fitted_blazers=["Fitted blazers"]
 
@@ -283,14 +286,16 @@ polo_t_shirts=["Polo Neck",
                "T Shirt",
                "Polos",
                "Polo Neck Tees",
-               "Pique Polo"]
+               "Pique Polo",
+               "Tees & Polos",
+               "Polo T-shirts"]
 
 blazers=["Woolen Blazer",
          "Blazers",
          "Jackets & Blazers",
          "Suits & Blazers"]
 
-double_breasted_blazers=["Double Breasted"]
+double_breasted_blazers=["Double Breasted", "Double Breasted Blazers"]
 
 casual_blazer=["Casual Blazer"]
 
@@ -365,7 +370,8 @@ jeans=["Jean",
         "jeans",
         "Jeans",
         "Denim Jeans",
-        "Denims & Jeggings"]
+        "Denims & Jeggings",
+       "Trousers,Denims & Jeggings"]
 
 salwars_and_churidhars=["Salwars & Churidhars"]
 
@@ -387,9 +393,10 @@ churidar=["Churidars",
 
 dhoti=["Dhoti"]
 
-pencil_skirts=["Pencil"]
+pencil_skirts=["Pencil", "Pencil Skirt"]
 
-a_line_skirt=["A-line"]
+a_line_skirt=["A-line",
+              "A-line Skirt"]
 
 skirts=["Skirts"]
 
