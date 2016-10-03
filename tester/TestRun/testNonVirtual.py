@@ -29,8 +29,22 @@ import RuleRepository.normalizationRules as nr
 # print outliers
 # print random.randint(0,0
 #
-test = cdb.getColumnValues("looksmash_db", "flipkart_data", "Sub_category")
-print test
+test = cdb.getFullData("looksmash_normalization", "normalization")
+# print test[0].keys()
+print dn.formatDict(test[0]["Type"])
+
+# t = {
+#     "ek": ["one", "ik", "vaaan"],
+#     "do": ["two", "dui", "don"]
+# }
+#
+# dict = {}
+# for k,v in t.iteritems() :
+#     print k,v
+#     dict.update(dict.fromkeys(v, k))
+#
+#
+# print dict
 
 
 #

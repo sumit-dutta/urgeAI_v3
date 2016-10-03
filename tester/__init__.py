@@ -95,5 +95,14 @@ def getFeed():
     return jsonify(t.testFeed(content))
 
 
+@app.route('/getFeedFromPhrase' , methods=['POST', 'OPTIONS'])
+@cross_origin()
+def getFeedFromPhrase():
+    content = request.json
+    print content["phrase"]
+
+    return jsonify(t.fromPhrase(content["phrase"]))
+
+
 
 

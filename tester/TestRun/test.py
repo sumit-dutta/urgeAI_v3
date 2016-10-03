@@ -7,6 +7,7 @@ import IntelligenceLayer.RuleEngine.ruleEngine as re
 import RuleRepository.looksmashStandards as ls
 import Utilities.RulesUtils.ruleUtils as ru
 import random
+import IntelligenceLayer.PhraseParser.phraseParser as pp
 
 
 #print re.computeAccentuateScores(data, userPrefs)
@@ -39,13 +40,21 @@ def getCategoryValueIndex(value, grouped_data, category):
         ind = random.randint(0,len(grouped_data[value][category])-1)
     return ind
 
+
+def fromPhrase(phrase):
+    userPrefs = pp.exractPrefsFromPhrase(phrase)
+    return testFeed(userPrefs)
+
+
 def testFeed(userprefs):
     print userprefs
 
     accentuateWeight = .7
     colorWeight = .5
     skinToneWeight = .1
-    scores = cdb.getFullData("looksmash_rules", "rules")[0]
+    scores = cdb.getFullData("looksmash_rules", "accentuate_women")[0]
+    hideScores = cdb.getFullData("looksmash_rules", "hide")[0]
+    normalization = cdb.getFullData("looksmash_normalization", "normalization")[0]
 
 
 
@@ -57,16 +66,26 @@ def testFeed(userprefs):
             "bust": False,
             "waist": False,
             "legs" : False
+        },
+
+        "hide": {
+            "arms": False,
+            "bust": False,
+            "stomach": False,
+            "hips and thighs": False
         }
     }
 
     for bodyPart in userprefs["accentuate"]:
         bodyPrefs["accentuate"][bodyPart] = True
 
+    for bodyPart in userprefs["hide"]:
+        bodyPrefs["hide"][bodyPart] = True
+
     colors = userprefs['colors']
     types = userprefs['types']
     skinTone = userprefs['skinTone']
-    domains = ["Jabong"]
+    domains = ["ShoppersStop"]
 
 
 
@@ -74,11 +93,12 @@ def testFeed(userprefs):
     scored_data = []
     grouped_data = {}
     for doc in jabong_data:
-        #doc = dn.normalize_data(doc)
+        #doc = dn.normalize_data(doc, normalization)
         accentuateScore, accentuateMsg = re.computeAccentuateScores(doc, bodyPrefs, scores)
+        hideScore =  re.computeHideScores(doc, bodyPrefs, hideScores)
         colorScore, colorMsg = re.computeColorScores(doc, colors)
         skinToneScore, skinToneMsg = re.computeSkinToneScores(doc,skinTone,colors)
-        doc['score'] = accentuateWeight*accentuateScore + colorWeight*colorScore + skinToneWeight*skinToneScore
+        doc['score'] = accentuateWeight*(accentuateScore + hideScore) + colorWeight*colorScore + skinToneWeight*skinToneScore
         doc['msg'] = me.getMsg(accentuateMsg + colorMsg + skinToneMsg)
         #print doc
         if doc['score'] not in grouped_data.keys():
@@ -144,7 +164,8 @@ def testFeed(userprefs):
         images[i]={"image" :product["Image"],
                    "msg" : product["msg"],
                    "url" : product["Url"],
-                   "domain": product["Domain"]
+                   "domain": product["Domain"],
+                   "score": product["score"]
                    }
         i = i+1
 

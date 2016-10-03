@@ -8,6 +8,17 @@ def filter_string(string):
     return string
 
 
+def formatDict(old_dict):
+    dict = {}
+    for k,v in old_dict.iteritems() :
+        dict.update(dict.fromkeys(v, k))
+
+    return dict
+
+def unionDict(dict1, dict2):
+    return dict(list(dict1.items()) + list(dict2.items()))
+
+
 def normalize_color(document, colors_dict):
     c = []
     color = document['Color']
@@ -107,23 +118,23 @@ def type_replace(typ, type_dict):
 
 
 
-def normalize_data(document):
+def normalize_data(document, normalization):
 
     print "---------------------------start---------------------------------"
     print document
     doc = document
     if 'Color' in document.keys():
-        doc = normalize_color(doc, nr.colors_dict)
+        doc = normalize_color(doc, unionDict(nr.colors_dict,formatDict(normalization["Color"])))
     if 'Sleeves' in document.keys():
-        doc = normalize_sleeve(doc, nr.sleeves_dict)
+        doc = normalize_sleeve(doc, unionDict(nr.sleeves_dict, formatDict(normalization["Sleeves"])))
     if 'Neck' in document.keys():
-        doc= normalize_neck(doc, nr.necks_dict)
+        doc= normalize_neck(doc, unionDict(nr.necks_dict, formatDict(normalization["Neck"])))
     if 'Pattern' in document.keys():
-        doc= normalize_pattern(doc, nr.patterns_dict)
+        doc= normalize_pattern(doc, unionDict(nr.patterns_dict, formatDict(normalization["Pattern"])))
     if 'Sub_category' in document.keys():
-        doc= normalize_sub(doc, nr.sub_categories_dict)
+        doc= normalize_sub(doc, unionDict(nr.sub_categories_dict, formatDict(normalization["Sub_category"])))
     if 'Type' in document.keys():
-        doc= normalize_type(doc, nr.types_dict)
+        doc= normalize_type(doc, unionDict(nr.types_dict, formatDict(normalization["Type"])))
     print doc
     print "----------------------------end------------------------------------"
     #cdb.replaceDocument("looksmash_db", "looksmash_women", doc)
@@ -134,8 +145,10 @@ def normalize_data(document):
 
 
 
+doc = {'Category': 'Topwear', 'Style': u'Casual', 'Sub_category': u'Tees and Polos', 'Fit': u'Slim', 'Color': u'Multicolour', 'Pattern': '', 'Image': u'http://3d978f8b966e64b0cfec-6729d756a2f36342416a9128f1759751.r41.cf3.rackcdn.com/1000004585418-Bspssm1602-Multicolor-Sunshine-Var1-1000004585418-Var1_01-517.jpg', 'Sex': 'Men', 'Url': 'http://www.landmarkshops.in//Men/Tops/Tees-and-Polos/MAX-MAX-Striped-Polo-T-Shirt/p/1000004585418-Bspssm1602-Multicolor-Sunshine-Var1', 'Length': '', 'Cost': u'499', 'Sleeves': u'Half Sleeve', 'Neck': '', 'Product Name': u'Striped Polo T-Shirt', 'Occasion': '', 'Size': [u'S', u'M', u'L', u'XL', u'XXL'], 'Type': u'Polo', 'Brand': u'MAX', 'Fabric': ''}
 
 
 
 
-
+test = cdb.getFullData("looksmash_normalization", "normalization")[0]
+print normalize_data(doc, test)

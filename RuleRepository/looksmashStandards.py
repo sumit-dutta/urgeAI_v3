@@ -279,7 +279,7 @@ class Sub_Category(Enum):
 
 
 
-allColors = [e.value for e in Colors]
-
-print allColors
+# allColors = [e.value for e in Colors]
+#
+# print allColors
 

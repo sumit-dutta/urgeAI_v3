@@ -40,6 +40,34 @@ $(document).ready(function(){
 
 
 
+    $(".submitPhrase").click(function() {
+      $(".input").slideUp();
+      $(".result").empty();
+
+      json = {
+        phrase : $(".searchPhrase").val()
+      }
+
+      $.ajax({
+        url:"http://127.0.0.1:5000/getFeedFromPhrase",
+        type:"POST",
+        data:JSON.stringify(json),
+        contentType:"application/json",
+        dataType:"json",
+        success: function(data){
+         var obj = jQuery.parseJSON(data.result);
+             console.log(obj)
+             $.each(obj, function(k, v) {
+            //display the key and value pair
+            console.log(k + ' is ' + v)
+            $( ".result" ).append( "<div class='item'><a href='" +v.url+ "' target='_blank'><img class='image' src='" + v.image + "'><span class='domain'>" +  v.domain +"</span><span class='msg'>"+ v.msg +"</span></a></div>" );
+            });
+        }
+      })
+
+    })
+
+
 
     $( ".submit" ).click(function() {
       $(".input").slideUp();
@@ -47,6 +75,7 @@ $(document).ready(function(){
       var colors = []
       var types = []
       var accentuate = []
+      var hide = []
 
       $('input[name="colors"]:checked').each(function() {
          console.log(this.value);
@@ -77,11 +106,20 @@ $(document).ready(function(){
 
       });
 
+
+      $('input[name="hide"]:checked').each(function() {
+         console.log(this.value);
+         hide.push(this.value)
+
+      });
+
+
       var json = {
         skinTone: $(".skTone").val(),
         colors: colors,
         types : types,
-        accentuate: accentuate
+        accentuate: accentuate,
+        hide: hide
       };
 
       console.log(JSON.stringify(json));
@@ -97,7 +135,7 @@ $(document).ready(function(){
              $.each(obj, function(k, v) {
             //display the key and value pair
             console.log(k + ' is ' + v)
-            $( ".result" ).append( "<div class='item'><a href='" +v.url+ "' target='_blank'><img class='image' src='" + v.image + "'><span class='domain'>" +  v.domain +"</span><span class='msg'>"+ v.msg +"</span></a></div>" );
+            $( ".result" ).append( "<div class='item'><a title='"+ v.score+ "' href='" +v.url+ "' target='_blank'><img class='image' src='" + v.image + "'><span class='domain'>" +  v.domain +"</span><span class='msg'>"+ v.msg +"</span></a></div>" );
             });
         }
       })

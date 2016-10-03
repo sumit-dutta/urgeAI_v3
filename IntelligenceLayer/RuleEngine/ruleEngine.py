@@ -3,6 +3,8 @@ import RuleRepository.skinToneRules as sk
 #import RuleRepository.productPairingRules as pp
 
 
+hideParams = ["Sub_category", "Neck", "Sleeves", "Fit"]
+
 def computeScore(record, rules, scores, preference, bodyPart):
     score = 0
     count = 0
@@ -47,19 +49,65 @@ def computeAccentuateScores(record, userPrefs, scores = rp.scores, rules = rp.ru
     return score, msg
 
 
+def computeHideScores(record, userPrefs, scores = rp.scores):
+    print scores
+    score  = 0
+
+    if userPrefs["hide"]["arms"]:
+        score = score + computeHScore(record, scores, "hide", "arms")
+
+    if userPrefs["hide"]["bust"]:
+        score = score + computeHScore(record, scores, "hide", "bust")
+
+    if userPrefs["hide"]["hips and thighs"]:
+        score = score + computeHScore(record, scores, "hide", "hips and thighs")
+
+    if userPrefs["hide"]["stomach"]:
+        score = score + computeHScore(record, scores, "hide", "stomach")
+
+
+    return score
+
+
+def computeHScore(record, scores, ruleType, bodyPart):
+    #print record["Category"]
+    score = 0
+    count = 0
+    for attr in hideParams:
+        # print attr
+        # print record
+        # print scores[bodyPart].keys()
+        # print "----"
+        if attr in record.keys() and record[attr] in scores[bodyPart].keys():
+            print scores[bodyPart][record[attr]], record[attr]
+            score = score + float(scores[bodyPart][record[attr]])
+            count = count + 1
+            #print attr, score
+    if count==0:
+        count = count + 1
+    return score/count
+
+
+
+
 def computeSkinToneScores(record, skinTone, colors, scores = sk.scores):
     score = 0
     count = 0
     msg = ""
-    for color in record["Color"]:
-        if color in diff(scores[skinTone].keys(), colors):
-            score = score + scores[skinTone][color]
-            count = count + 1
-            msg = "SK"
+    if skinTone != "":
+        for color in record["Color"]:
+            if color in diff(scores[skinTone].keys(), colors):
+                score = score + scores[skinTone][color]
+                count = count + 1
+                msg = "SK"
 
-    if count==0:
-        count = count + 1
-    return score/count,msg
+        if count==0:
+            count = count + 1
+
+        return score/count,msg
+    else:
+        return 0,""
+
 
 
 #old logic

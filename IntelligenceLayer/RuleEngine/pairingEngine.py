@@ -14,35 +14,54 @@ def pairProduct(gender, color, pattern, sub_cat, rules):
     bm_subCats = list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs]))
     fw_subCats = list(set([x[ls.Category.Footwear.value] for x in subcat_pairs]))
 
-    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["Jabong", "Flipkart", "Snapdeal", "Amazon"], bm_colors, bm_subCats))
-    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["Jabong",  "Flipkart", "Snapdeal", "Amazon"], fw_colors, fw_subCats))
+    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["ShoppersStop"], bm_colors, bm_subCats))
+    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["ShoppersStop"], fw_colors, fw_subCats))
 
     sorted_color_pairs = sorted(color_pairs, key=operator.itemgetter('Score'), reverse=True)
     sorted_subcat_pairs = sorted(subcat_pairs, key=operator.itemgetter('Score'), reverse=True)
 
-    final = {}
+    final = []
 
 
+    print sorted_color_pairs
 
     for color_pair in sorted_color_pairs:
-        print color_pair
+        #print color_pair
 
         colored_bms = [bm for bm in bottomwears if color_pair['Bottomwear'] in bm['Color']]
         colored_fws = [fw for fw in footwears if color_pair['Footwear'] in fw['Color']]
 
-        print colored_bms
-        print colored_fws
+
+        #print colored_bms
+        #print colored_fws
 
         for subcat_pair in sorted_subcat_pairs:
-            sl_bms = [bm['Image'] for bm in colored_bms if bm['Sub_category'] == subcat_pair['Bottomwear']]
-            sl_fws = [fw['Image'] for fw in colored_fws if fw['Sub_category'] == subcat_pair['Footwear']]
 
-            for i in range(0, min(len(sl_bms), len(sl_fws))-1):
-                final[sl_bms[i]] = sl_fws[i]
+            sl_bms = [bm for bm in colored_bms if bm['Sub_category'] == subcat_pair['Bottomwear']]
+            sl_fws = [fw for fw in colored_fws if fw['Sub_category'] == subcat_pair['Footwear']]
 
-    for key, value in final.iteritems():
-        print key,value
+            print color_pair, subcat_pair
+            print len(sl_bms), len(sl_fws)
 
 
 
-pairProduct("Female","Pink","",ls.Sub_Category.Kurtas.value,rules)
+            for i in range(0, min(len(sl_bms), len(sl_fws))):
+                value = {}
+                value["Bottomwear"] = sl_bms[i]
+                value["Footwear"] = sl_fws[i]
+                value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"])
+                final.append(value)
+                print "entry", value
+
+
+
+    print final
+    sorted_final = sorted(final, key=operator.itemgetter('Score'), reverse=True)
+    for pair in sorted_final[:10]:
+        print pair["Bottomwear"]["Image"]
+        print pair["Footwear"]["Image"]
+        print "----"
+
+
+
+pairProduct("Female","White","",ls.Sub_Category.Anarkali.value,rules)
