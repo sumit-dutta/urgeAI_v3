@@ -76,6 +76,7 @@ $(document).ready(function(){
       var types = []
       var accentuate = []
       var hide = []
+      var bodyType = []
 
       $('input[name="colors"]:checked').each(function() {
          console.log(this.value);
@@ -114,12 +115,21 @@ $(document).ready(function(){
       });
 
 
+      $('input[name="bodyType"]:checked').each(function() {
+         console.log(this.value);
+         bodyType.push(this.value)
+
+      });
+
+
       var json = {
+        gender: $(".gender").val(),
         skinTone: $(".skTone").val(),
         colors: colors,
         types : types,
         accentuate: accentuate,
-        hide: hide
+        hide: hide,
+        bodyType: bodyType
       };
 
       console.log(JSON.stringify(json));

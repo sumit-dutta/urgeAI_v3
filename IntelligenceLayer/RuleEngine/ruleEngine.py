@@ -5,6 +5,14 @@ import RuleRepository.skinToneRules as sk
 
 hideParams = ["Sub_category", "Neck", "Sleeves", "Fit"]
 
+def getNormalizedScore(score):
+    if score > 1:
+        return 1
+    elif score < -1:
+        return -1
+    else:
+        return score
+
 def computeScore(record, rules, scores, preference, bodyPart):
     score = 0
     count = 0
@@ -14,9 +22,33 @@ def computeScore(record, rules, scores, preference, bodyPart):
             score = score + float(scores[bodyPart][record[attr]])
             count = count + 1
             #print attr, score
-    if count==0:
-        count = count + 1
-    return score/count
+
+    return getNormalizedScore(score)
+
+
+
+def computeAccentuateScoresForMen(record, userPrefs, scores, rules = rp.rules_men):
+
+    score  = 0
+    msg = ''
+    if userPrefs["bodyType"]["Oval"]:
+        curScore =  computeScore(record, rules, scores, "bodyType", "Oval")
+        if curScore > 0:
+            score = score + computeScore(record, rules, scores, "bodyType", "Oval")
+            msg = msg + 'AA'
+    if userPrefs["bodyType"]["Trapezoid"]:
+        curScore =  computeScore(record, rules, scores, "bodyType", "Trapezoid")
+        if curScore > 0:
+            score = score + computeScore(record, rules, scores, "bodyType", "Trapezoid")
+            msg = msg + 'AB'
+    if userPrefs["bodyType"]["Rectangle"]:
+        curScore =  computeScore(record, rules, scores, "bodyType", "Rectangle")
+        if curScore > 0:
+            score = score + computeScore(record, rules, scores, "bodyType", "Rectangle")
+            msg = msg + 'AL'
+
+
+    return score, msg
 
 
 
@@ -46,7 +78,7 @@ def computeAccentuateScores(record, userPrefs, scores = rp.scores, rules = rp.ru
             score = score + computeScore(record, rules, scores, "accentuate", "waist")
             msg = msg + 'AW'
 
-    return score, msg
+    return getNormalizedScore(score), msg
 
 
 def computeHideScores(record, userPrefs, scores = rp.scores):
@@ -66,7 +98,7 @@ def computeHideScores(record, userPrefs, scores = rp.scores):
         score = score + computeHScore(record, scores, "hide", "stomach")
 
 
-    return score
+    return getNormalizedScore(score)
 
 
 def computeHScore(record, scores, ruleType, bodyPart):
@@ -83,9 +115,8 @@ def computeHScore(record, scores, ruleType, bodyPart):
             score = score + float(scores[bodyPart][record[attr]])
             count = count + 1
             #print attr, score
-    if count==0:
-        count = count + 1
-    return score/count
+
+    return getNormalizedScore(score)
 
 
 
@@ -101,10 +132,9 @@ def computeSkinToneScores(record, skinTone, colors, scores = sk.scores):
                 count = count + 1
                 msg = "SK"
 
-        if count==0:
-            count = count + 1
 
-        return score/count,msg
+
+        return getNormalizedScore(score),msg
     else:
         return 0,""
 

@@ -3,6 +3,7 @@ from flask import jsonify
 
 from tester.TestRun import test as t
 import Services.getStandards as gstd
+import Services.PairingService as ps
 
 from flask_cors import CORS, cross_origin
 
@@ -102,6 +103,16 @@ def getFeedFromPhrase():
     print content["phrase"]
 
     return jsonify(t.fromPhrase(content["phrase"]))
+
+@app.route('/pairProduct' , methods=['POST', 'OPTIONS'])
+@cross_origin()
+def productPairing():
+    content = request.json
+    print content
+    product = content["product"]
+    gender = content["gender"]
+
+    return jsonify(ps.pairProduct(product, gender))
 
 
 

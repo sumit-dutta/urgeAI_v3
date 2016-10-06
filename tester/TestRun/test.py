@@ -46,6 +46,58 @@ def fromPhrase(phrase):
     return testFeed(userPrefs)
 
 
+def createFeed(sorted_scores, grouped_data):
+    topwears = []
+    bottmwear = []
+    footwear = []
+
+    feed = []
+
+    bmIndex = 0
+    fwIndex = 0
+
+    for score in sorted_scores:
+        curTopwears = grouped_data[score][ls.Category.Topwear.value]
+        curBottomwears = grouped_data[score][ls.Category.Bottomwear.value]
+        curFootwears = grouped_data[score][ls.Category.Footwear.value]
+
+        random.shuffle(curTopwears)
+        random.shuffle(curBottomwears)
+        random.shuffle(curFootwears)
+
+        topwears.extend(curTopwears)
+        bottmwear.extend(curBottomwears)
+        footwear.extend(curFootwears)
+
+
+    for i in range(0,(len(topwears))):
+        feed.append(topwears[i])
+        if i%2 == 0 and bmIndex < len(bottmwear):
+            feed.append(bottmwear[bmIndex])
+            bmIndex = bmIndex + 1
+
+        if i%3 == 0 and fwIndex < len(footwear):
+            feed.append(footwear[fwIndex])
+            fwIndex = fwIndex + 1
+
+
+    while (bmIndex < len(bottmwear)):
+        feed.append(bottmwear[bmIndex])
+        bmIndex = bmIndex + 1
+
+        if bmIndex%3 == 0 and fwIndex < len(footwear):
+            feed.append(footwear[fwIndex])
+            fwIndex = fwIndex + 1
+
+
+    if fwIndex < len(footwear):
+        feed.extend(footwear[fwIndex:])
+
+    return feed
+
+
+
+
 def testFeed(userprefs):
     print userprefs
 
@@ -53,6 +105,7 @@ def testFeed(userprefs):
     colorWeight = .5
     skinToneWeight = .1
     scores = cdb.getFullData("looksmash_rules", "accentuate_women")[0]
+    scores_men = cdb.getFullData("looksmash_rules", "accentuate_men")[0]
     hideScores = cdb.getFullData("looksmash_rules", "hide")[0]
     normalization = cdb.getFullData("looksmash_normalization", "normalization")[0]
 
@@ -68,6 +121,12 @@ def testFeed(userprefs):
             "legs" : False
         },
 
+        "bodyType": {
+            "Oval": False,
+            "Trapezoid": False,
+            "Rectangle": False
+        },
+
         "hide": {
             "arms": False,
             "bust": False,
@@ -76,28 +135,43 @@ def testFeed(userprefs):
         }
     }
 
-    for bodyPart in userprefs["accentuate"]:
-        bodyPrefs["accentuate"][bodyPart] = True
-
-    for bodyPart in userprefs["hide"]:
-        bodyPrefs["hide"][bodyPart] = True
-
     colors = userprefs['colors']
     types = userprefs['types']
     skinTone = userprefs['skinTone']
     domains = ["ShoppersStop"]
 
+    if userprefs["gender"] == "Female":
+
+        for bodyPart in userprefs["accentuate"]:
+            bodyPrefs["accentuate"][bodyPart] = True
+
+        for bodyPart in userprefs["hide"]:
+            bodyPrefs["hide"][bodyPart] = True
+
+        jabong_data =  cdb.getFullDataWithColorsAndTypesFromDomain("looksmash_db", "looksmash_women", domains, ru.getColorList(colors,skinTone), types)
 
 
-    jabong_data =  cdb.getFullDataWithColorsAndTypesFromDomain("looksmash_db", "looksmash_women", domains, ru.getColorList(colors,skinTone), types)
+    elif userprefs["gender"] == "Male":
+         for bodyType in userprefs["bodyType"]:
+            bodyPrefs["bodyType"][bodyType] = True
+
+         jabong_data =  cdb.getFullDataWithColorsAndTypesFromDomain("looksmash_db", "looksmash_men", domains, ru.getColorList(colors,skinTone), types)
+
+
+
+
+
     scored_data = []
     grouped_data = {}
     for doc in jabong_data:
         #doc = dn.normalize_data(doc, normalization)
-        accentuateScore, accentuateMsg = re.computeAccentuateScores(doc, bodyPrefs, scores)
-        hideScore =  re.computeHideScores(doc, bodyPrefs, hideScores)
+        accentuateScore, accentuateMsg = re.computeAccentuateScores(doc, bodyPrefs, scores) if userprefs["gender"] == "Female" else re.computeAccentuateScoresForMen(doc, bodyPrefs, scores_men)
+        hideScore =  re.computeHideScores(doc, bodyPrefs, hideScores) if userprefs["gender"] == "Female" else 0
         colorScore, colorMsg = re.computeColorScores(doc, colors)
         skinToneScore, skinToneMsg = re.computeSkinToneScores(doc,skinTone,colors)
+
+        print accentuateScore, hideScore, colorScore, skinToneScore
+
         doc['score'] = accentuateWeight*(accentuateScore + hideScore) + colorWeight*colorScore + skinToneWeight*skinToneScore
         doc['msg'] = me.getMsg(accentuateMsg + colorMsg + skinToneMsg)
         #print doc
@@ -113,50 +187,53 @@ def testFeed(userprefs):
         scored_data.append(doc)
 
 
-    feed = []
 
-    json.dump(grouped_data, open("grouped.txt",'w'))
+
+    #json.dump(grouped_data, open("grouped.txt",'w'))
     sorted_keys = grouped_data.keys()
     sorted_keys.sort(reverse=True)
 
-    if 0.5 in sorted_keys:
-        limInd = sorted_keys.index(0.5)
-    else:
-        limInd = len(sorted_keys)/2
+    feed = createFeed(sorted_keys, grouped_data)
 
-    for i in range(0,100):
-        for index, value in enumerate(sorted_keys):
-            #print value, index
-            if index > limInd:
-                #print "breaking..!"
-                break;
-            ind = getCategoryValueIndex(value, grouped_data, ls.Category.Topwear.value)
-            if ind >= 0:
-                feed.append(grouped_data[value][ls.Category.Topwear.value][ind])
-                #print grouped_data[value][ls.Category.Topwear.value][ind]
-                del grouped_data[value][ls.Category.Topwear.value][ind]
-
-            ind = getCategoryValueIndex(value, grouped_data, ls.Category.Bottomwear.value)
-            if ind >= 0:
-                feed.append(grouped_data[value][ls.Category.Bottomwear.value][ind])
-                #print grouped_data[value][ls.Category.Bottomwear.value][ind]
-                del grouped_data[value][ls.Category.Bottomwear.value][ind]
-
-            ind = getCategoryValueIndex(value, grouped_data, ls.Category.Footwear.value)
-            if ind >= 0:
-                feed.append(grouped_data[value][ls.Category.Footwear.value][ind])
-                #print grouped_data[value][ls.Category.Footwear.value][ind]
-                del grouped_data[value][ls.Category.Footwear.value][ind]
-
-
-        if limInd > len(sorted_keys):
-            limInd = 0
-        else:
-            limInd = limInd + 1
-
-    print sorted_keys
-
-    print feed
+    #
+    # if 0.5 in sorted_keys:
+    #     limInd = sorted_keys.index(0.5)
+    # else:
+    #     limInd = len(sorted_keys)/2
+    #
+    # for i in range(0,100):
+    #     for index, value in enumerate(sorted_keys):
+    #         #print value, index
+    #         if index > limInd:
+    #             #print "breaking..!"
+    #             break;
+    #         ind = getCategoryValueIndex(value, grouped_data, ls.Category.Topwear.value)
+    #         if ind >= 0:
+    #             feed.append(grouped_data[value][ls.Category.Topwear.value][ind])
+    #             #print grouped_data[value][ls.Category.Topwear.value][ind]
+    #             del grouped_data[value][ls.Category.Topwear.value][ind]
+    #
+    #         ind = getCategoryValueIndex(value, grouped_data, ls.Category.Bottomwear.value)
+    #         if ind >= 0:
+    #             feed.append(grouped_data[value][ls.Category.Bottomwear.value][ind])
+    #             #print grouped_data[value][ls.Category.Bottomwear.value][ind]
+    #             del grouped_data[value][ls.Category.Bottomwear.value][ind]
+    #
+    #         ind = getCategoryValueIndex(value, grouped_data, ls.Category.Footwear.value)
+    #         if ind >= 0:
+    #             feed.append(grouped_data[value][ls.Category.Footwear.value][ind])
+    #             #print grouped_data[value][ls.Category.Footwear.value][ind]
+    #             del grouped_data[value][ls.Category.Footwear.value][ind]
+    #
+    #
+    #     if limInd > len(sorted_keys):
+    #         limInd = 0
+    #     else:
+    #         limInd = limInd + 1
+    #
+    # print sorted_keys
+    #
+    # print feed
 
     images = {}
     i=0
@@ -165,7 +242,9 @@ def testFeed(userprefs):
                    "msg" : product["msg"],
                    "url" : product["Url"],
                    "domain": product["Domain"],
-                   "score": product["score"]
+                   "score": product["score"],
+                   "Color": product["Color"],
+                   "Sub_category": product["Sub_category"]
                    }
         i = i+1
 

@@ -145,10 +145,11 @@ def normalize_data(document, normalization):
 
 
 
-doc = {'Category': 'Topwear', 'Style': u'Casual', 'Sub_category': u'Tees and Polos', 'Fit': u'Slim', 'Color': u'Multicolour', 'Pattern': '', 'Image': u'http://3d978f8b966e64b0cfec-6729d756a2f36342416a9128f1759751.r41.cf3.rackcdn.com/1000004585418-Bspssm1602-Multicolor-Sunshine-Var1-1000004585418-Var1_01-517.jpg', 'Sex': 'Men', 'Url': 'http://www.landmarkshops.in//Men/Tops/Tees-and-Polos/MAX-MAX-Striped-Polo-T-Shirt/p/1000004585418-Bspssm1602-Multicolor-Sunshine-Var1', 'Length': '', 'Cost': u'499', 'Sleeves': u'Half Sleeve', 'Neck': '', 'Product Name': u'Striped Polo T-Shirt', 'Occasion': '', 'Size': [u'S', u'M', u'L', u'XL', u'XXL'], 'Type': u'Polo', 'Brand': u'MAX', 'Fabric': ''}
-
-
+doc = { "Category" : "Footwear", "Url" : "https://www.shoppersstop.com/life-womens-casual-ankle-buckle-closure-heel-sandal/p-200835034", "Upper Material" : "Synthetic leather", "Occasion" : "", "Type" : "", "Sub_category" : "Heels", "Color" : "Beige", "Image" : "https://sslimages5.shoppersstop.com/sys-master/images/h54/h2c/9282154922014/200835034_9111.png_1088Wx1632H?output-format=jpg&background-color=f8f8f8", "Sex" : "Women", "Cost" : "1499", "Product Name" : "Womens Casual Ankle Buckle Closure Heel Sandal", "Brand" : "LIFE", "Size" : [ "5.5", "6.0", "6.5", "7.5", "8.5" ] }
 
 
 test = cdb.getFullData("looksmash_normalization", "normalization")[0]
+
+print test
+
 print normalize_data(doc, test)

@@ -12,6 +12,15 @@ rules = {"accentuate":
             }
         }
 
+rules_men = {"bodyType":
+    {
+        "Oval" : ["Sleeves","Neck","Sub_category"],
+        "Trapezoid" : ["Sleeves","Neck","Sub_category"],
+        "Rectangle" : ["Sleeves","Neck","Sub_category"]
+
+    }
+}
+
 
 
 ####################################################Scores######################################

@@ -29,9 +29,15 @@ import RuleRepository.normalizationRules as nr
 # print outliers
 # print random.randint(0,0
 #
-test = cdb.getFullData("looksmash_normalization", "normalization")
+test = cdb.getFullData("looksmash_rules", "pairing")[0]
 # print test[0].keys()
-print dn.formatDict(test[0]["Type"])
+print test["Female"]["Pattern"]
+
+# t = ["one", "two", "three", "four", "five"]
+#
+# random.shuffle(t)
+#
+# print t
 
 # t = {
 #     "ek": ["one", "ik", "vaaan"],
