@@ -5,6 +5,7 @@ import RuleRepository.skinToneRules as sk
 import DatabaseLayer.dataNormalization as dn
 import random
 import RuleRepository.normalizationRules as nr
+import Services.RatingService as rs
 
 
 
@@ -29,9 +30,36 @@ import RuleRepository.normalizationRules as nr
 # print outliers
 # print random.randint(0,0
 #
-test = cdb.getFullData("looksmash_rules", "pairing")[0]
-# print test[0].keys()
-print test["Female"]["Pattern"]
+# test = cdb.getFullData("looksmash_rules", "pairing")[0]
+# # print test[0].keys()
+# print test["Female"]["Color"]["Topwear"]
+
+doc = { "Category" : "Footwear", "Url" : "https://www.shoppersstop.com/life-womens-casual-ankle-buckle-closure-heel-sandal/p-200835034", "Upper Material" : "Synthetic leather", "Occasion" : "", "Type" : "", "Sub_category" : "Heels", "Color" : "Beige", "Image" : "https://sslimages5.shoppersstop.com/sys-master/images/h54/h2c/9282154922014/200835034_9111.png_1088Wx1632H?output-format=jpg&background-color=f8f8f8", "Sex" : "Women", "Cost" : "1499", "Product Name" : "Womens Casual Ankle Buckle Closure Heel Sandal", "Brand" : "LIFE", "Size" : [ "5.5", "6.0", "6.5", "7.5", "8.5" ] }
+userpref = {
+    "accentuate": {
+        "arms": False,
+        "bust": False,
+        "waist": False,
+        "legs" : True
+    },
+
+    "bodyType": {
+        "Oval": False,
+        "Trapezoid": False,
+        "Rectangle": False
+    },
+
+    "hide": {
+        "arms": False,
+        "bust": False,
+        "stomach": False,
+        "hips and thighs": False
+    },
+
+    "skinTone" : "fair"
+}
+
+print rs.getRatings(doc, userpref)
 
 # t = ["one", "two", "three", "four", "five"]
 #

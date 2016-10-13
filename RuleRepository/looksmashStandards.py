@@ -26,7 +26,7 @@ class Colors (Enum):
     Blue ='Blue'
     Grey = 'Grey'
     Black = 'Black'
-    Navy_Blue = 'Navy blue'
+    Navy_Blue = 'Navy Blue'
     White = 'White'
     Red = 'Red'
     Green = 'Green'

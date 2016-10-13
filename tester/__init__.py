@@ -4,6 +4,7 @@ from flask import jsonify
 from tester.TestRun import test as t
 import Services.getStandards as gstd
 import Services.PairingService as ps
+import Services.RatingService as rs
 
 from flask_cors import CORS, cross_origin
 
@@ -113,6 +114,17 @@ def productPairing():
     gender = content["gender"]
 
     return jsonify(ps.pairProduct(product, gender))
+
+
+@app.route('/rateProduct' , methods=['POST', 'OPTIONS'])
+@cross_origin()
+def productRating():
+    content = request.json
+    print content
+    record = content["record"]
+    userprefs = content["userprefs"]
+
+    return jsonify(rs.getRatings(record, userprefs))
 
 
 
