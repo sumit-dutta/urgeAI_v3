@@ -218,4 +218,4 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
 
 
 
-#print pairProductTopwear("Female","White","Geometric Print",ls.Sub_Category.Anarkali.value,rules)
+#print pairProductTopwear("Male","Black","Geometric Print",ls.Sub_Category.Casual_Shirts.value,rules)

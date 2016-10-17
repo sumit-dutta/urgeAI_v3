@@ -78,6 +78,14 @@ def getGenderDataFromDomain(dbName, collectionName, gender, domain):
     return result
 
 
+def getGenderDataFromDomainWithCategory(dbName, collectionName, gender, domain, category):
+    db = client[dbName]
+    collection = db[collectionName]
+    result = collection.find({"Sex": gender, "Domain": domain, "Category": category})
+    return result
+
+
+
 
 def getCategoryData(dbName, collectionName, category):
     db = client[dbName]
