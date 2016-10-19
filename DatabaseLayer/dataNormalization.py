@@ -7,6 +7,13 @@ def filter_string(string):
     string = string.title()
     return string
 
+def getCategorySuffix(category):
+    if category == "Topwear":
+        return "top"
+    elif category == "Bottomwear":
+        return "bottom"
+    elif category == "Footwear":
+        return "foot"
 
 def formatDict(old_dict):
     dict = {}
@@ -132,7 +139,7 @@ def normalize_data(document, normalization):
     if 'Pattern' in document.keys():
         doc= normalize_pattern(doc, unionDict(nr.patterns_dict, formatDict(normalization["Pattern"])))
     if 'Sub_category' in document.keys():
-        doc= normalize_sub(doc, unionDict(nr.sub_categories_dict, formatDict(normalization["Sub_category"])))
+        doc= normalize_sub(doc, unionDict(nr.sub_categories_dict, formatDict(normalization["Sub_category_" + getCategorySuffix(doc["Category"])])))
     if 'Type' in document.keys():
         doc= normalize_type(doc, unionDict(nr.types_dict, formatDict(normalization["Type"])))
     print doc
@@ -145,11 +152,11 @@ def normalize_data(document, normalization):
 
 
 
-doc = { "Category" : "Footwear", "Url" : "https://www.shoppersstop.com/life-womens-casual-ankle-buckle-closure-heel-sandal/p-200835034", "Upper Material" : "Synthetic leather", "Occasion" : "", "Type" : "", "Sub_category" : "Heels", "Color" : "Beige", "Image" : "https://sslimages5.shoppersstop.com/sys-master/images/h54/h2c/9282154922014/200835034_9111.png_1088Wx1632H?output-format=jpg&background-color=f8f8f8", "Sex" : "Women", "Cost" : "1499", "Product Name" : "Womens Casual Ankle Buckle Closure Heel Sandal", "Brand" : "LIFE", "Size" : [ "5.5", "6.0", "6.5", "7.5", "8.5" ] }
-
-
-test = cdb.getFullData("looksmash_normalization", "normalization")[0]
-
-print test
-
-print normalize_data(doc, test)
+# doc = { "Category" : "Footwear", "Url" : "https://www.shoppersstop.com/life-womens-casual-ankle-buckle-closure-heel-sandal/p-200835034", "Upper Material" : "Synthetic leather", "Occasion" : "", "Type" : "", "Sub_category" : "Sports", "Color" : "Beige", "Image" : "https://sslimages5.shoppersstop.com/sys-master/images/h54/h2c/9282154922014/200835034_9111.png_1088Wx1632H?output-format=jpg&background-color=f8f8f8", "Sex" : "Women", "Cost" : "1499", "Product Name" : "Womens Casual Ankle Buckle Closure Heel Sandal", "Brand" : "LIFE", "Size" : [ "5.5", "6.0", "6.5", "7.5", "8.5" ] }
+#
+#
+# test = cdb.getFullData("looksmash_normalization", "normalization")[0]
+#
+# print test
+#
+# print normalize_data(doc, test)

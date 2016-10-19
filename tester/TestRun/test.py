@@ -194,6 +194,7 @@ def testFeed(userprefs):
     sorted_keys.sort(reverse=True)
 
     feed = createFeed(sorted_keys, grouped_data)
+    print feed
 
     #
     # if 0.5 in sorted_keys:
