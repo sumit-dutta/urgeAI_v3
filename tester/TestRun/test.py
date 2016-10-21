@@ -139,6 +139,7 @@ def testFeed(userprefs):
     types = userprefs['types']
     skinTone = userprefs['skinTone']
     domains = ["ShoppersStop"]
+    domain = "ShoppersStop"
 
     if userprefs["gender"] == "Female":
 
@@ -148,15 +149,13 @@ def testFeed(userprefs):
         for bodyPart in userprefs["hide"]:
             bodyPrefs["hide"][bodyPart] = True
 
-        jabong_data =  cdb.getFullDataWithColorsAndTypesFromDomain("looksmash_db", "looksmash_women", domains, ru.getColorList(colors,skinTone), types)
-
+        jabong_data =  cdb.getFullDataFromDomain("looksmash_db", "looksmash_women", domain)
 
     elif userprefs["gender"] == "Male":
          for bodyType in userprefs["bodyType"]:
             bodyPrefs["bodyType"][bodyType] = True
 
-         jabong_data =  cdb.getFullDataWithColorsAndTypesFromDomain("looksmash_db", "looksmash_men", domains, ru.getColorList(colors,skinTone), types)
-
+         jabong_data =  cdb.getFullDataFromDomain("looksmash_db", "looksmash_men", domain)
 
 
 
