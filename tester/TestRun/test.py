@@ -248,7 +248,8 @@ def testFeed(userprefs):
                    "Sub_category": product["Sub_category"],
                    "Product Name": product["Product Name"],
                    "Cost": product["Cost"],
-                   "Brand": product["Brand"]
+                   "Brand": product["Brand"],
+                   "Category": product["Category"]
                    }
         i = i+1
 
