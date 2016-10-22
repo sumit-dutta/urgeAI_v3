@@ -51,19 +51,22 @@ def wordEntityMapping(word, map):
         map["types"].append(ltypes[word.lower()])
 
 
+    print ltypes
     return map
 
 
 
 
 
-def exractPrefsFromPhrase(phrase):
+def exractPrefsFromPhrase(phrase, gender):
     mapper = {
         "colors": [],
         "types": [],
         "accentuate": [],
         "hide": [],
-        "skinTone": ""
+        "skinTone": "",
+        "bodyType": [],
+        "gender": gender
 
     }
 
@@ -71,6 +74,8 @@ def exractPrefsFromPhrase(phrase):
 
     for word in words:
         wordEntityMapping(word, mapper)
+
+    print mapper
 
     return mapper
 

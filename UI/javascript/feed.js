@@ -45,7 +45,8 @@ $(document).ready(function(){
       $(".result").empty();
 
       json = {
-        phrase : $(".searchPhrase").val()
+        phrase : $(".searchPhrase").val(),
+        gender: $(".gender").val()
       }
 
       $.ajax({

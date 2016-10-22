@@ -15,4 +15,4 @@ app.logger.addHandler(streamHandler)
 app.logger.info("Logging is set up.")
 
 
-app.run(debug=False, host='0.0.0.0', port=8000)
+app.run(debug=False, host='0.0.0.0', port=8000, threaded=True)

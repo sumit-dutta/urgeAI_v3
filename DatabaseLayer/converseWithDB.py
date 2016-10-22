@@ -186,7 +186,24 @@ def getFullDataWithColorsAndTypesFromDomain(dbName, collectionName, domains, col
         condition = {"Domain": domain}
         conditionListForDomain.append(condition)
 
-    finalQuery = {"$and":[{"$or": conditionListForColor}, {"$or": conditionListForType}, {"$or": conditionListForDomain}]}
+
+    if len(conditionListForColor) > 0 :
+        if len(conditionListForType) > 0:
+            finalQuery = {"$and":[{"$or": conditionListForColor}, {"$or": conditionListForType}, {"$or": conditionListForDomain}]}
+
+        else:
+            finalQuery = {"$and":[{"$or": conditionListForColor}, {"$or": conditionListForDomain}]}
+
+    elif len(conditionListForType) > 0 :
+        finalQuery = {"$and":[{"$or": conditionListForType}, {"$or": conditionListForDomain}]}
+
+    else:
+        finalQuery = {"$or": conditionListForDomain}
+
+
+
+
+
     print finalQuery
     result = collection.find(finalQuery)
     return result
@@ -211,6 +228,7 @@ def getFullDataWithColorsAndSubCategoryFromDomain(dbName, collectionName, domain
     for domain in domains:
         condition = {"Domain": domain}
         conditionListForDomain.append(condition)
+
 
     finalQuery = {"$and":[{"$or": conditionListForColor}, {"$or": conditionListForSubCat}, {"$or": conditionListForDomain}]}
     print finalQuery

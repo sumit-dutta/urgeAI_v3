@@ -101,9 +101,11 @@ def getFeed():
 @cross_origin()
 def getFeedFromPhrase():
     content = request.json
+    print content
     print content["phrase"]
+    print content["gender"]
 
-    return jsonify(t.fromPhrase(content["phrase"]))
+    return jsonify(t.fromPhrase(content["phrase"], content["gender"]))
 
 @app.route('/pairProduct' , methods=['POST', 'OPTIONS'])
 @cross_origin()

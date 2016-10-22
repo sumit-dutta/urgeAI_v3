@@ -6,6 +6,7 @@ import DatabaseLayer.dataNormalization as dn
 import random
 import RuleRepository.normalizationRules as nr
 import Services.RatingService as rs
+import IntelligenceLayer.PhraseParser.phraseParser as pp
 
 
 
@@ -37,9 +38,13 @@ import Services.RatingService as rs
 #     print doc["Sub_category"], "->",doc["Product Name"]
 
 
-test = cdb.getFullData("looksmash_normalization", "normalization")[0]
 
-print test.keys()
+# test = cdb.getFullDataWithColorsAndTypesFromDomain("looksmash_db", "looksmash_women",["ShoppersStop", "Jabong"], [], [])
+#
+# for doc in test:
+#     print doc
+
+pp.exractPrefsFromPhrase("black shoes", "Female")
 
 
 # doc = { "Category" : "Footwear", "Url" : "https://www.shoppersstop.com/life-womens-casual-ankle-buckle-closure-heel-sandal/p-200835034", "Upper Material" : "Synthetic leather", "Occasion" : "", "Type" : "", "Sub_category" : "Heels", "Color" : "Beige", "Image" : "https://sslimages5.shoppersstop.com/sys-master/images/h54/h2c/9282154922014/200835034_9111.png_1088Wx1632H?output-format=jpg&background-color=f8f8f8", "Sex" : "Women", "Cost" : "1499", "Product Name" : "Womens Casual Ankle Buckle Closure Heel Sandal", "Brand" : "LIFE", "Size" : [ "5.5", "6.0", "6.5", "7.5", "8.5" ] }
