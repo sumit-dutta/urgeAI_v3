@@ -40,8 +40,17 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
     bm_subCats = list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs]))
     fw_subCats = list(set([x[ls.Category.Footwear.value] for x in subcat_pairs]))
 
-    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["ShoppersStop"], bm_colors, bm_subCats))
-    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["ShoppersStop"], fw_colors, fw_subCats))
+    print fw_subCats
+
+    if gender == "Male":
+        dbName = "looksmash_men"
+    else:
+        dbName = "looksmash_women"
+
+    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], bm_colors, bm_subCats))
+    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], fw_colors, fw_subCats))
+
+    print "footwear length", len(footwears)
 
     sorted_color_pairs = sorted(color_pairs, key=operator.itemgetter('Score'), reverse=True)
     sorted_subcat_pairs = sorted(subcat_pairs, key=operator.itemgetter('Score'), reverse=True)
@@ -105,8 +114,13 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
     tp_subCats = list(set([x[ls.Category.Topwear.value] for x in subcat_pairs]))
     fw_subCats = list(set([x[ls.Category.Footwear.value] for x in subcat_pairs]))
 
-    topwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["ShoppersStop"], tp_colors, tp_subCats))
-    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["ShoppersStop"], fw_colors, fw_subCats))
+    if gender == "Male":
+        dbName = "looksmash_men"
+    else:
+        dbName = "looksmash_women"
+
+    topwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], tp_colors, tp_subCats))
+    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], fw_colors, fw_subCats))
 
     sorted_color_pairs = sorted(color_pairs, key=operator.itemgetter('Score'), reverse=True)
     sorted_subcat_pairs = sorted(subcat_pairs, key=operator.itemgetter('Score'), reverse=True)
@@ -167,8 +181,15 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
     bm_subCats = list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs]))
     tp_subCats = list(set([x[ls.Category.Topwear.value] for x in subcat_pairs]))
 
-    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["ShoppersStop"], bm_colors, bm_subCats))
-    topwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", "looksmash_women", ["ShoppersStop"], tp_colors, tp_subCats))
+    if gender == "Male":
+        dbName = "looksmash_men"
+    else:
+        dbName = "looksmash_women"
+
+    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], bm_colors, bm_subCats))
+    topwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], tp_colors, tp_subCats))
+
+
 
     sorted_color_pairs = sorted(color_pairs, key=operator.itemgetter('Score'), reverse=True)
     sorted_subcat_pairs = sorted(subcat_pairs, key=operator.itemgetter('Score'), reverse=True)
