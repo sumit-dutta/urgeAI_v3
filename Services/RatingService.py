@@ -16,7 +16,7 @@ def getRatings(record, userPrefs):
         accentuate, amsg = re.computeAccentuateScores(record, userPrefs, cdb.getFullData("looksmash_rules", "accentuate_women")[0])
         hide = re.computeHideScores(record, userPrefs, cdb.getFullData("looksmash_rules", "hide")[0])
         bodyType = ( accentuate + hide )/2
-        overall = (bodyType + skinTone)/2
+        overall = float(bodyType + skinTone)/2
 
         ratings["overall"] = overall
         ratings["body type"] = bodyType
@@ -27,7 +27,7 @@ def getRatings(record, userPrefs):
     elif record[ls.Attributes.Sex.value] == "Men":
         bodyType, msg = re.computeAccentuateScoresForMen(record, userPrefs, cdb.getFullData("looksmash_rules", "accentuate_men")[0])
         print type(bodyType)
-        overall = (bodyType + skinTone)/2
+        overall = float(bodyType + skinTone)/2
 
         ratings["overall"] = overall
         ratings["body type"] = bodyType
