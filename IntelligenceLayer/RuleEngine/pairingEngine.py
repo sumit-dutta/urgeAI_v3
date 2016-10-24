@@ -5,6 +5,29 @@ import random
 
 rules = cdb.getFullData("looksmash_rules", "pairing")[0]
 
+
+def createPairFeed(sorted_final):
+    grouped_data = {}
+    for pair in sorted_final:
+        if pair["Score"] not in grouped_data.keys():
+            grouped_data[pair["Score"]] = []
+
+        grouped_data[pair["Score"]].append(pair)
+
+
+    sorted_keys = grouped_data.keys()
+    sorted_keys.sort(reverse=True)
+
+    pairFeed = []
+    for score in sorted_keys:
+        curPairs = grouped_data[score]
+
+        random.shuffle(curPairs)
+
+        pairFeed.extend(curPairs)
+
+    return pairFeed
+
 def getPatternScore(pattern1, pattern2, category, rules):
     if category == ls.Category.Topwear.value:
         thatRule = [pr for pr in rules if pr[ls.Category.Bottomwear.value] == pattern1 and pr[ls.Category.Footwear.value] == pattern2]
@@ -100,7 +123,7 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
 
     print final
     sorted_final = sorted(final, key=operator.itemgetter('Score'), reverse=True)
-    return sorted_final
+    return createPairFeed(sorted_final)
 
 
 
@@ -166,7 +189,7 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
 
     print final
     sorted_final = sorted(final, key=operator.itemgetter('Score'), reverse=True)
-    return sorted_final
+    return createPairFeed(sorted_final)
 
 
 
@@ -236,27 +259,8 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
 
     print final
     sorted_final = sorted(final, key=operator.itemgetter('Score'), reverse=True)
+    return createPairFeed(sorted_final)
 
-    grouped_data = {}
-    for pair in sorted_final:
-        if pair["Score"] not in grouped_data.keys():
-            grouped_data[pair["Score"]] = []
-
-        grouped_data[pair["Score"]].append(pair)
-
-
-    sorted_keys = grouped_data.keys()
-    sorted_keys.sort(reverse=True)
-
-    pairFeed = []
-    for score in sorted_keys:
-        curPairs = grouped_data[score]
-
-        random.shuffle(curPairs)
-
-        pairFeed.extend(curPairs)
-
-    return pairFeed
 
 
 
