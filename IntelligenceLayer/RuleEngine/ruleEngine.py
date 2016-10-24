@@ -62,6 +62,7 @@ def computeAccentuateScores(record, userPrefs, scores = rp.scores, rules = rp.ru
          if curScore > 0:
             score = score + computeScore(record, rules, scores, "accentuate", "arms")
             msg = msg + 'AA'
+
     if userPrefs["accentuate"]["bust"]:
          curScore =  computeScore(record, rules, scores, "accentuate", "bust")
          if curScore > 0:
