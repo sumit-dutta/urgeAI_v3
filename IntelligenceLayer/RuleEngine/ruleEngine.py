@@ -18,8 +18,11 @@ def computeScore(record, rules, scores, preference, bodyPart):
     count = 0
     for attr in rules[preference][bodyPart]:
         if attr in record.keys() and record[attr] in scores[bodyPart].keys():
-            print scores[bodyPart][record[attr]]
-            score = score + float(scores[bodyPart][record[attr]])
+            recordAttr = record[attr]
+            if isinstance(record[attr], list):
+                recordAttr = record[attr][0]
+            print scores[bodyPart][recordAttr]
+            score = score + float(scores[bodyPart][recordAttr])
             count = count + 1
             #print attr, score
 
