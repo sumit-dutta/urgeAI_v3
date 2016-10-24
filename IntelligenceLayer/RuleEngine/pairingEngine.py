@@ -1,6 +1,7 @@
 import RuleRepository.looksmashStandards as ls
 import DatabaseLayer.converseWithDB as cdb
 import operator
+import random
 
 rules = cdb.getFullData("looksmash_rules", "pairing")[0]
 
@@ -235,7 +236,27 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
 
     print final
     sorted_final = sorted(final, key=operator.itemgetter('Score'), reverse=True)
-    return sorted_final
+
+    grouped_data = {}
+    for pair in sorted_final:
+        if pair["Score"] not in grouped_data.keys():
+            grouped_data[pair["Score"]] = []
+
+        grouped_data[pair["Score"]].append(pair)
+
+
+    sorted_keys = grouped_data.keys()
+    sorted_keys.sort(reverse=True)
+
+    pairFeed = []
+    for score in sorted_keys:
+        curPairs = grouped_data[score]
+
+        random.shuffle(curPairs)
+
+        pairFeed.extend(curPairs)
+
+    return pairFeed
 
 
 
