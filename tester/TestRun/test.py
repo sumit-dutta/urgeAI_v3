@@ -249,7 +249,9 @@ def testFeed(userprefs):
                    "Product Name": product["Product Name"],
                    "Cost": product["Cost"],
                    "Brand": product["Brand"],
-                   "Category": product["Category"]
+                   "Category": product["Category"],
+                   "Neck": product["Neck"],
+                   "Sleeves": product["Sleeves"]
                    }
         i = i+1
 
