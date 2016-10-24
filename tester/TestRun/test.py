@@ -250,9 +250,14 @@ def testFeed(userprefs):
                    "Cost": product["Cost"],
                    "Brand": product["Brand"],
                    "Category": product["Category"],
-                   "Neck": product["Neck"],
-                   "Sleeves": product["Sleeves"]
                    }
+
+        if "Neck" in product.keys():
+            images[i]["Neck"] = product["Neck"],
+
+        if "Sleeves" in product.keys():
+            images[i]["Sleeves"] = product["Sleeves"]
+
         i = i+1
 
     return {"result": json.dumps(images)}
