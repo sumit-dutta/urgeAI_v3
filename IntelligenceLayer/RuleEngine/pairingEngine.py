@@ -5,14 +5,22 @@ import random
 
 rules = cdb.getFullData("looksmash_rules", "pairing")[0]
 
+def getBucket(score):
+    if score == 1 or score == .8:
+        return 1
+    if score == .6:
+        return .6
+    if score == .4 or score == .2:
+        return .2
 
 def createPairFeed(sorted_final):
     grouped_data = {}
     for pair in sorted_final:
-        if pair["Score"] not in grouped_data.keys():
-            grouped_data[pair["Score"]] = []
+        bucket = getBucket(pair["Score"])
+        if bucket not in grouped_data.keys():
+            grouped_data[bucket] = []
 
-        grouped_data[pair["Score"]].append(pair)
+        grouped_data[bucket].append(pair)
 
 
     sorted_keys = grouped_data.keys()

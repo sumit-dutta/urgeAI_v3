@@ -13,7 +13,7 @@ scores["dusky"] = {
                     "Purple": .8,
                     "Orange": .8,
                     "Cream": 1,
-                    "Tan": .8,
+                    "Tan": 1,
                     "Turquoise": .8,
                     "Copper": .8,
                     "Mauve": .8,
@@ -22,13 +22,30 @@ scores["dusky"] = {
                     "Scarlet": 1,
                     "Plum": 1,
                     "Emerald Green": .8,
-                    "Indigo": 1
+                    "Indigo": 1,
+                    "Black": 1,
+                    "White": 1,
+                    "Grey":	.8,
+                    "Gold":	.6,
+                    "Silver": 1,
+                    "Navy Blue": .6,
+                    "Yellow": .6,
+                    "Brown": .4,
+                    "Maroon": .8,
+                    "Pink":	.6,
+                    "Beige": .4,
+                    "Olive": .6,
+                    "Khaki": .4,
+                    "Peach": .4,
+                    "Magenta": .8,
+                    "Lime Green": .4
+
 
 
                  }
 
 scores["wheatish"] = {
-                        "Blue": 1,
+                        "Blue": .8,
                         "Navy Blue": 1,
                         "Red": 1,
                         "Purple": .8,
@@ -44,7 +61,23 @@ scores["wheatish"] = {
                         "Scarlet": 1,
                         "Plum": 1,
                         "Emerald Green": 1,
-                        "Indigo": .8
+                        "Indigo": 1,
+                        "Black": 1,
+                        "White": 1,
+                        "Grey":	.6,
+                        "Gold":	.8,
+                        "Silver": .6,
+                        "Green": .6,
+                        "Yellow": .4,
+                        "Brown": .2,
+                        "Maroon": .8,
+                        "Pink":	.8,
+                        "Beige": .6,
+                        "Orange": .6,
+                        "Khaki": .2,
+                        "Nude": .8,
+                        "Lime Green": .2
+
 
                 }
 
@@ -69,7 +102,20 @@ scores["fair"] = {
                         "Scarlet": .8,
                         "Plum": .8,
                         "Emerald Green": 1,
-                        "Indigo": 1
+                        "Indigo": 1,
+                        "Black": 1,
+                        "White": 1,
+                        "Grey":	1,
+                        "Gold":	1,
+                        "Silver": 1,
+                        "Yellow": 1,
+                        "Brown": .8,
+                        "Orange": .8,
+                        "Copper": .6,
+                        "Mustard": .8,
+                        "Nude": .8,
+                        "Lime Green":.8
+
 
                 }
 
