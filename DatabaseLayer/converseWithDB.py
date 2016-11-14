@@ -209,6 +209,57 @@ def getFullDataWithColorsAndTypesFromDomain(dbName, collectionName, domains, col
     return result
 
 
+def phraseQuery(dbName, domains, colors, types, subCats, occasions):
+    db = client[dbName]
+    collection1 = db["looksmash_men"]
+    collection2 = db["looksmash_women"]
+    conditionListForColor = []
+    conditionListForSubCat = []
+    conditionListForDomain = []
+    conditionListForType = []
+
+    for color in colors:
+        condition = {"Color": {"$elemMatch":{"$eq":color}}}
+        conditionListForColor.append(condition)
+
+    for subCat in subCats:
+        condition = {"Sub_category": subCat}
+        conditionListForSubCat.append(condition)
+
+    for domain in domains:
+        condition = {"Domain": domain}
+        conditionListForDomain.append(condition)
+
+    for type in types:
+        condition = {"Type": type}
+        conditionListForType.append(condition)
+
+    conjunctionQueryForType = []
+    conjunctionQueryForSubCat = []
+
+    if len(conditionListForType) > 0:
+        conjunctionQueryForType.append({"$or": conditionListForType})
+
+
+    if len(conditionListForColor) > 0:
+        conjunctionQueryForType.append({"$or": conditionListForColor})
+        conjunctionQueryForSubCat.append({"$or": conditionListForColor})
+
+    if len(conditionListForSubCat) > 0:
+        conjunctionQueryForSubCat.append({"$or": conditionListForSubCat})
+
+    if len(conditionListForDomain) > 0:
+        conjunctionQueryForType.append({"$or": conditionListForDomain})
+        conjunctionQueryForSubCat.append({"$or": conditionListForDomain})
+
+
+    finalQuery = {"$or":[{"$and":conjunctionQueryForType}, {"$and": conjunctionQueryForSubCat}]}
+    print finalQuery
+    result = collection1.find(finalQuery)
+    return result
+
+
+
 
 
 def getFullDataWithColorsAndSubCategoryFromDomain(dbName, collectionName, domains, colors, subCats):
@@ -264,6 +315,8 @@ def replaceDocument(dbName, collectionName, document):
     collection = db[collectionName]
     id = document["_id"]
     collection.replace_one({"_id": id}, document)
+
+
 
 
 

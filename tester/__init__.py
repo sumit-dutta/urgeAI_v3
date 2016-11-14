@@ -5,6 +5,7 @@ from tester.TestRun import test as t
 import Services.getStandards as gstd
 import Services.PairingService as ps
 import Services.RatingService as rs
+import Services.PhraseService as pps
 
 from flask_cors import CORS, cross_origin
 
@@ -103,9 +104,8 @@ def getFeedFromPhrase():
     content = request.json
     print content
     print content["phrase"]
-    print content["gender"]
 
-    return jsonify(t.fromPhrase(content["phrase"], content["gender"]))
+    return jsonify(pps.getPhraseProducts(content["phrase"]))
 
 @app.route('/pairProduct' , methods=['POST', 'OPTIONS'])
 @cross_origin()

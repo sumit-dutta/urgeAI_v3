@@ -7,6 +7,8 @@ import random
 import RuleRepository.normalizationRules as nr
 import Services.RatingService as rs
 import IntelligenceLayer.PhraseParser.phraseParser as pp
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 
 
@@ -74,24 +76,17 @@ import IntelligenceLayer.PhraseParser.phraseParser as pp
 #
 # print rs.getRatings(doc, userpref)
 
-t = [{"one":1}, {"two":2}, {"three":3}, {"four":4}, {"five":5}]
-
-random.shuffle(t)
-
-print t
+# t = [{"one":1}, {"two":2}, {"three":3}, {"four":4}, {"five":5}]
+#
+# random.shuffle(t)
+#
+# print t
 
 # t = {
 #     "ek": ["one", "ik", "vaaan"],
 #     "do": ["two", "dui", "don"]
 # }
 #
-# dict = {}
-# for k,v in t.iteritems() :
-#     print k,v
-#     dict.update(dict.fromkeys(v, k))
-#
-#
-# print dict
 
 
 #
@@ -107,3 +102,28 @@ print t
 # for doc in shorts_data:
 #     doc = dn.normalize_data(doc)
 #     cdb.replaceDocument("looksmash_db", "looksmash_women", doc)
+
+#
+# mappedAttributes = {}
+# standards = []
+# colors = [e.value for e in ls.Colors]
+# mappedAttributes = pp.mapAttributes(colors, "Colors", mappedAttributes)
+# types = [e.value for e in ls.Type]
+# mappedAttributes = pp.mapAttributes(types, "Type", mappedAttributes)
+# subCategories = [e.value for e in ls.Sub_Category]
+# mappedAttributes = pp.mapAttributes(subCategories, "Sub_Category", mappedAttributes)
+#
+#
+#
+# print mappedAttributes
+#
+# print fuzz.partial_ratio("sport shoes", "shoes")
+
+# test = cdb.getFullData("looksmash_normalization", "normalization")[0]
+#
+# print dn.unionDict(nr.types_dict, dn.formatDict(test["Type"]))
+
+r = cdb.phraseQuery("looksmash_db", ["ShoppersStop"], ["Black", "Red"], ["Sports Shoes"], ["Casual Shirts"], [])
+
+for doc in r:
+    print doc
