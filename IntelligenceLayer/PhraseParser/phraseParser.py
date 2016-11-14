@@ -116,7 +116,7 @@ mappedAttributes = mapAttributes(colors, "Colors", mappedAttributes)
 types = [e.value for e in ls.Type]
 
 subCategories = [e.value for e in ls.Sub_Category]
-mappedAttributes = mapAttributes(subCategories, "Sub_Category", mappedAttributes)
+mappedAttributes = mapAttributes(subCategories, "Sub_category", mappedAttributes)
 mappedAttributes = mapAttributes(types, "Type", mappedAttributes)
 
 typeNormalization = cdb.getFullData("looksmash_normalization", "normalization")[0]

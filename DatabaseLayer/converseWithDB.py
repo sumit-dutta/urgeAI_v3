@@ -1,6 +1,7 @@
 import pymongo
 
 from pymongo import MongoClient
+from itertools import chain
 
 
 client = MongoClient('52.220.13.79', 27017)
@@ -217,6 +218,7 @@ def phraseQuery(dbName, domains, colors, types, subCats, occasions):
     conditionListForSubCat = []
     conditionListForDomain = []
     conditionListForType = []
+    print subCats
 
     for color in colors:
         condition = {"Color": {"$elemMatch":{"$eq":color}}}
@@ -237,6 +239,8 @@ def phraseQuery(dbName, domains, colors, types, subCats, occasions):
     conjunctionQueryForType = []
     conjunctionQueryForSubCat = []
 
+    print conditionListForSubCat
+
     if len(conditionListForType) > 0:
         conjunctionQueryForType.append({"$or": conditionListForType})
 
@@ -255,7 +259,9 @@ def phraseQuery(dbName, domains, colors, types, subCats, occasions):
 
     finalQuery = {"$or":[{"$and":conjunctionQueryForType}, {"$and": conjunctionQueryForSubCat}]}
     print finalQuery
-    result = collection1.find(finalQuery)
+    result1 = collection1.find(finalQuery)
+    result2 = collection2.find(finalQuery)
+    result = [x for x in chain(result1, result2)]
     return result
 
 
