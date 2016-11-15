@@ -59,6 +59,7 @@ def thresholdPartialMatches(phrases, standards):
             #print phrases
             score = fuzz.partial_ratio(phrases[i], standards[j].lower())
             if score >= 80:
+                print phrases[i], standards[j]
                 partialMatches.append(standards[j])
 
 
@@ -89,7 +90,7 @@ def createMapper(valueList):
     return mapperDict
 
 def mapAttributes(attributes, attributeName, mappedAttributes):
-    for i in range(0, len(attributes)-1):
+    for i in range(0, len(attributes)):
         mappedAttributes[attributes[i]] = attributeName
 
     return mappedAttributes
@@ -108,24 +109,84 @@ def getMappedAttributes(attributes, mapper):
     return mapped
 
 
+synonyms = {
+    "polos": ls.Sub_Category.Polo_T_shirts.value,
+    "polo tee": ls.Sub_Category.Polo_T_shirts.value,
+    "polo shirt": ls.Sub_Category.Polo_T_shirts.value,
+    "polo collar tee": ls.Sub_Category.Polo_T_shirts.value,
+    "polo collar shirt": ls.Sub_Category.Polo_T_shirts.value,
+    "fitting dress": ls.Sub_Category.Bodycon_Dresses.value,
+    "form fitting dress": ls.Sub_Category.Bodycon_Dresses.value,
+    "figure hugging dress": ls.Sub_Category.Bodycon_Dresses.value,
+    "tight dress": ls.Sub_Category.Bodycon_Dresses.value,
+    "long dress": ls.Sub_Category.Maxis.value,
+    "floor length dress": ls.Sub_Category.Maxis.value,
+    "flowy dress": ls.Sub_Category.Maxis.value,
+    "ankle length dress": ls.Sub_Category.Maxis.value,
+    "beach dress": ls.Sub_Category.Maxis.value,
+    "informal dress": ls.Sub_Category.Maxis.value,
+    "tshirt": ls.Type.Tees.value,
+    "tee-shirt": ls.Type.Tees.value,
+    "tee shirt": ls.Type.Tees.value,
+    "casual tee": ls.Type.Tees.value,
+    "casual t": ls.Type.Tees.value,
+    "sport shirt": ls.Type.Tees.value,
+    "indigo": ls.Colors.Blue.value,
+    "navy": ls.Colors.Blue.value,
+    "cyan": ls.Colors.Blue.value,
+    "bluish": ls.Colors.Blue.value,
+    "fuchsia": ls.Colors.Pink.value,
+    "pinkish" : ls.Colors.Pink.value,
+    "mauve": ls.Colors.Purple.value,
+    "violet": ls.Colors.Purple.value,
+    "purplish": ls.Colors.Purple.value,
+    "emerald": ls.Colors.Green.value,
+    "pista": ls.Colors.Green.value,
+    "lime": ls.Colors.Green.value,
+    "pastel": ls.Colors.Green.value
+
+}
+
+def removeDependentPhrases(phrase, phrases):
+    for i in range(0, len(phrases)):
+        if fuzz.partial_ratio(phrase, phrases[i]) > 90:
+            phrases[i] = ""
+
+    return phrases
+
+
+def replaceSynonyms(phrases):
+    for i in range(0, len(phrases)):
+        if phrases[i] in synonyms.keys():
+            curPhrase = phrases[i]
+            phrases = removeDependentPhrases(phrases[i], phrases)
+            phrases[i] = synonyms[curPhrase].lower()
+
+    return phrases
+
 
 mappedAttributes = {}
 standards = []
 colors = [e.value for e in ls.Colors]
 mappedAttributes = mapAttributes(colors, "Colors", mappedAttributes)
 types = [e.value for e in ls.Type]
+occasions = ["Everyday wear", "Regular wear", "Party"]
 
 subCategories = [e.value for e in ls.Sub_Category]
 mappedAttributes = mapAttributes(subCategories, "Sub_category", mappedAttributes)
 mappedAttributes = mapAttributes(types, "Type", mappedAttributes)
+mappedAttributes = mapAttributes(occasions, "Occasions", mappedAttributes)
+print "here",mappedAttributes
 
 typeNormalization = cdb.getFullData("looksmash_normalization", "normalization")[0]
 
 typeMappings = dn.unionDict(nr.types_dict, dn.formatDict(typeNormalization["Type"]))
 
+standards.extend(occasions)
 standards.extend(colors)
 standards.extend(types)
 standards.extend(subCategories)
+
 
 
 ltypes = createMapper(types)
@@ -155,8 +216,11 @@ def tokenizeImpWords(phrase):
 
 
 def removeTypeDependency(mappedAttributes, typeMappings):
-    if "Sub_Category" in mappedAttributes.keys() and "Type" in mappedAttributes.keys():
-        for category in mappedAttributes["Sub_Category"]:
+    print mappedAttributes.keys()
+    if "Sub_category" in mappedAttributes.keys() and "Type" in mappedAttributes.keys():
+        print "True"
+        for category in mappedAttributes["Sub_category"]:
+                print typeMappings[category]
                 if typeMappings[category] in mappedAttributes["Type"]:
                     mappedAttributes["Type"] = [x for x in mappedAttributes["Type"] if x != typeMappings[category]]
 
@@ -183,11 +247,11 @@ def extractPrefsFromPhrase(phrase):
     phrases.extend(words)
 
 
-    thresholdMatches = thresholdPartialMatches(phrases, standards)
+    thresholdMatches = thresholdPartialMatches(replaceSynonyms(phrases), standards)
     print thresholdMatches
 
     result = removeTypeDependency(getMappedAttributes(thresholdMatches, mappedAttributes), typeMappings)
-    print result
+    print "here",result
     return result
 
 

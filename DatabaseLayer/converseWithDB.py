@@ -243,21 +243,40 @@ def phraseQuery(dbName, domains, colors, types, subCats, occasions):
 
     if len(conditionListForType) > 0:
         conjunctionQueryForType.append({"$or": conditionListForType})
+        if len(conditionListForColor) > 0:
+            conjunctionQueryForType.append({"$or": conditionListForColor})
+
+        if len(conditionListForDomain) > 0:
+            conjunctionQueryForType.append({"$or": conditionListForDomain})
 
 
-    if len(conditionListForColor) > 0:
-        conjunctionQueryForType.append({"$or": conditionListForColor})
-        conjunctionQueryForSubCat.append({"$or": conditionListForColor})
+
+
+
 
     if len(conditionListForSubCat) > 0:
         conjunctionQueryForSubCat.append({"$or": conditionListForSubCat})
+        if len(conditionListForColor) > 0:
+            conjunctionQueryForSubCat.append({"$or": conditionListForColor})
 
-    if len(conditionListForDomain) > 0:
-        conjunctionQueryForType.append({"$or": conditionListForDomain})
-        conjunctionQueryForSubCat.append({"$or": conditionListForDomain})
+        if len(conditionListForDomain) > 0:
+            conjunctionQueryForSubCat.append({"$or": conditionListForDomain})
 
 
-    finalQuery = {"$or":[{"$and":conjunctionQueryForType}, {"$and": conjunctionQueryForSubCat}]}
+
+
+
+    finalQuery = {"$or" : []}
+
+    if len(conjunctionQueryForType) > 0:
+        finalQuery["$or"].append({"$and":conjunctionQueryForType})
+
+
+    if len(conjunctionQueryForSubCat) > 0:
+        finalQuery["$or"].append({"$and":conjunctionQueryForSubCat})
+
+
+
     print finalQuery
     result1 = collection1.find(finalQuery)
     result2 = collection2.find(finalQuery)
