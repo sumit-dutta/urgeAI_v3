@@ -6,6 +6,7 @@ from operator import itemgetter
 
 def getPhraseProducts(userprefs):
 
+
     bodyPrefs = {
         "accentuate": {
             "arms": False,

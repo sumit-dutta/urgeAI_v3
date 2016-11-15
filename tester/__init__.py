@@ -105,7 +105,7 @@ def getFeedFromPhrase():
     print content
     print content["phrase"]
 
-    return jsonify(pps.getPhraseProducts(content["phrase"]))
+    return jsonify(pps.getPhraseProducts(content))
 
 @app.route('/pairProduct' , methods=['POST', 'OPTIONS'])
 @cross_origin()
