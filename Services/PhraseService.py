@@ -52,6 +52,9 @@ def getPhraseProducts(userprefs):
     if "Occasion" in mappedAttrs.keys():
         occasions = mappedAttrs["Occasion"]
 
+    for color in userprefs["colors"]:
+        colors.append(color)
+
     products = cdb.phraseQuery("looksmash_db", ["ShoppersStop"], colors, types, subCats, occasions)
 
     if userprefs["gender"] == "Female":
