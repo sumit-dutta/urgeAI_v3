@@ -87,7 +87,7 @@ def getPhraseProducts(userprefs):
                    # "msg" : product["msg"],
                    "url" : product["Url"],
                    "domain": product["Domain"],
-                   # "score": product["score"],
+                    "score": product["score"],
                    "Color": product["Color"],
                    "Sub_category": product["Sub_category"],
                    "Product Name": product["Product Name"],

@@ -58,7 +58,7 @@ def thresholdPartialMatches(phrases, standards):
         for j in range(0, len(standards)):
             #print phrases
             score = fuzz.partial_ratio(phrases[i], standards[j].lower())
-            if score >= 80:
+            if score >= 90:
                 print phrases[i], standards[j]
                 partialMatches.append(standards[j])
 
@@ -186,6 +186,8 @@ standards.extend(occasions)
 standards.extend(colors)
 standards.extend(types)
 standards.extend(subCategories)
+
+standards = sorted(standards, key=len, reverse=True)
 
 
 
