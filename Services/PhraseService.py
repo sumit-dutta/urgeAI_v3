@@ -6,6 +6,9 @@ from operator import itemgetter
 
 def getPhraseProducts(userprefs):
 
+    if "gender" not in userprefs.keys():
+        userprefs["gender"] = "Female"
+
 
     bodyPrefs = {
         "accentuate": {
@@ -61,15 +64,15 @@ def getPhraseProducts(userprefs):
     if userprefs["gender"] == "Female":
 
         for bodyPart in userprefs["accentuate"]:
-            bodyPrefs["accentuate"][bodyPart] = True
+            bodyPrefs["accentuate"][bodyPart.lower()] = True
 
         for bodyPart in userprefs["hide"]:
-            bodyPrefs["hide"][bodyPart] = True
+            bodyPrefs["hide"][bodyPart.lower()] = True
 
 
     elif userprefs["gender"] == "Male":
         for bodyType in userprefs["bodyType"]:
-            bodyPrefs["bodyType"][bodyType] = True
+            bodyPrefs["bodyType"][bodyType.lower()] = True
 
 
     for doc in products:
