@@ -58,8 +58,9 @@ def thresholdPartialMatches(phrases, standards):
         for j in range(0, len(standards)):
             #print phrases
             score = fuzz.partial_ratio(phrases[i], standards[j].lower())
+            print phrases[i], standards[j].lower(), score
             if score >= 90:
-                print phrases[i], standards[j]
+
                 partialMatches.append(standards[j])
 
 
@@ -165,35 +166,7 @@ def replaceSynonyms(phrases):
     return phrases
 
 
-mappedAttributes = {}
-standards = []
-colors = [e.value for e in ls.Colors]
-mappedAttributes = mapAttributes(colors, "Colors", mappedAttributes)
-types = [e.value for e in ls.Type]
-occasions = ["Everyday wear", "Regular wear", "Party"]
 
-subCategories = [e.value for e in ls.Sub_Category]
-mappedAttributes = mapAttributes(subCategories, "Sub_category", mappedAttributes)
-mappedAttributes = mapAttributes(types, "Type", mappedAttributes)
-mappedAttributes = mapAttributes(occasions, "Occasions", mappedAttributes)
-print "here",mappedAttributes
-
-typeNormalization = cdb.getFullData("looksmash_normalization", "normalization")[0]
-
-typeMappings = dn.unionDict(nr.types_dict, dn.formatDict(typeNormalization["Type"]))
-
-standards.extend(occasions)
-standards.extend(colors)
-standards.extend(types)
-standards.extend(subCategories)
-
-standards = sorted(standards, key=len, reverse=True)
-
-
-
-ltypes = createMapper(types)
-accentuate = ["arms", "bust", "legs", "waist"]
-hide = ["arms", "bust", "stomach", "hips and thighs"]
 
 def tokenizeImpWords(phrase):
     stop = set(stopwords.words('english'))
@@ -231,6 +204,37 @@ def removeTypeDependency(mappedAttributes, typeMappings):
 
 
 def extractPrefsFromPhrase(phrase):
+
+    mappedAttributes = {}
+    standards = []
+    colors = [e.value for e in ls.Colors]
+    mappedAttributes = mapAttributes(colors, "Colors", mappedAttributes)
+    types = [e.value for e in ls.Type]
+    occasions = ["Everyday wear", "Regular wear", "Party"]
+
+    subCategories = [e.value for e in ls.Sub_Category]
+    mappedAttributes = mapAttributes(subCategories, "Sub_category", mappedAttributes)
+    mappedAttributes = mapAttributes(types, "Type", mappedAttributes)
+    mappedAttributes = mapAttributes(occasions, "Occasions", mappedAttributes)
+    print "here",mappedAttributes
+
+    typeNormalization = cdb.getFullData("looksmash_normalization", "normalization")[0]
+
+    typeMappings = dn.unionDict(nr.types_dict, dn.formatDict(typeNormalization["Type"]))
+
+    standards.extend(occasions)
+    standards.extend(colors)
+    standards.extend(types)
+    standards.extend(subCategories)
+
+    standards = sorted(standards, key=len, reverse=True)
+
+
+
+    ltypes = createMapper(types)
+    accentuate = ["arms", "bust", "legs", "waist"]
+    hide = ["arms", "bust", "stomach", "hips and thighs"]
+
     mapper = {
         "colors": [],
         "types": [],
