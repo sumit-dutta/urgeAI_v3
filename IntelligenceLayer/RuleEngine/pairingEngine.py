@@ -36,8 +36,9 @@ def createPairFeed(sorted_final):
 
     return pairFeed
 
-def getPatternScore(record1, record2, category, rules):
-    if "Pattern" in record1.keys() and "Pattern" in record2.keys():
+def getPatternScore(record1, record2, category, rule, pattern):
+    if "Pattern" in record1.keys() and "Pattern" in record2.keys() and pattern != '':
+        rules = rule[pattern]
         pattern1 = record1["Pattern"]
         pattern2 = record2["Pattern"]
         if category == ls.Category.Topwear.value:
@@ -128,7 +129,7 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
                 print sl_fws[i]
                 value["Bottomwear"] = sl_bms[i]
                 value["Footwear"] = sl_fws[i]
-                value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_bms[i], sl_fws[i], gender, rules[gender][ls.Category.Topwear.value][pattern])
+                value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_bms[i], sl_fws[i], gender, rules[gender]["Pattern"][ls.Category.Topwear.value], pattern)
                 final.append(value)
                 print "entry", value
 
@@ -194,7 +195,7 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
                     del sl_tps[i]['_id']
                 value["Topwear"] = sl_tps[i]
                 value["Footwear"] = sl_fws[i]
-                value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_tps[i], sl_fws[i], gender, rules[gender][ls.Category.Bottomwear.value][pattern])
+                value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_tps[i], sl_fws[i], gender, rules[gender]["Pattern"][ls.Category.Bottomwear.value], pattern)
                 final.append(value)
                 print "entry", value
 
@@ -264,7 +265,7 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
                     del sl_tps[i]['_id']
                 value["Bottomwear"] = sl_bms[i]
                 value["Topwear"] = sl_tps[i]
-                value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_tps[i], sl_bms[i], gender, rules[gender][ls.Category.Footwear.value][pattern])
+                value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_tps[i], sl_bms[i], gender, rules[gender]["Pattern"][ls.Category.Footwear.value], pattern)
                 final.append(value)
                 print "entry", value
 

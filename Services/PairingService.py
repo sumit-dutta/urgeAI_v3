@@ -11,11 +11,16 @@ def pairProduct(record, gender):
 
     rules = getPairingRules()
 
+    if ls.Attributes.Style.value in record.keys():
+        pattern = record[ls.Attributes.Style.value]
+    else:
+        pattern = ""
+
     if record["Category"] == "Topwear":
-        return pe.pairProductTopwear(gender, record[ls.Attributes.Color.value], "", record[ls.Attributes.Sub_Category.value], rules)
+        return pe.pairProductTopwear(gender, record[ls.Attributes.Color.value], pattern, record[ls.Attributes.Sub_Category.value], rules)
 
     if record["Category"] == ls.Category.Bottomwear.value:
-        return pe.pairProductBottomwear(gender, record[ls.Attributes.Color.value], "", record[ls.Attributes.Sub_Category.value], rules)
+        return pe.pairProductBottomwear(gender, record[ls.Attributes.Color.value], pattern, record[ls.Attributes.Sub_Category.value], rules)
 
     if record["Category"] == ls.Category.Footwear.value:
-        return pe.pairProductFootwear(gender, record[ls.Attributes.Color.value], "", record[ls.Attributes.Sub_Category.value], rules)
+        return pe.pairProductFootwear(gender, record[ls.Attributes.Color.value], pattern, record[ls.Attributes.Sub_Category.value], rules)

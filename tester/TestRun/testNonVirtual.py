@@ -123,7 +123,6 @@ from fuzzywuzzy import process
 #
 # print dn.unionDict(nr.types_dict, dn.formatDict(test["Type"]))
 
-r = cdb.phraseQuery("looksmash_db", ["ShoppersStop"], ["Black", "Red"], ["Sports Shoes"], ["Casual Shirts"], [])
+v = rules = cdb.getFullData("looksmash_rules", "pairing")[0]["Male"]["Pattern"]
 
-for doc in r:
-    print doc
+print v
