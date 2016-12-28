@@ -11,8 +11,8 @@ def pairProduct(record, gender):
 
     rules = getPairingRules()
 
-    if ls.Attributes.Style.value in record.keys():
-        pattern = record[ls.Attributes.Style.value]
+    if "Pattern" in record.keys():
+        pattern = record["Pattern"]
     else:
         pattern = ""
 

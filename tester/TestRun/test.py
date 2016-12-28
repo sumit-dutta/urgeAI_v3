@@ -259,7 +259,7 @@ def testFeed(userprefs):
             images[i]["Sleeves"] = product["Sleeves"]
 
         if "Style" in product.keys():
-            images[i]["Style"] = product["Style"]
+            images[i]["Pattern"] = product["Pattern"]
 
         i = i+1
 
