@@ -210,6 +210,7 @@ def testFeed(userprefs):
                    "Cost": product["Cost"],
                    "Brand": product["Brand"],
                    "Category": product["Category"],
+                   "Test": ""
                    }
 
         if "Neck" in product.keys():
