@@ -196,46 +196,6 @@ def testFeed(userprefs):
     feed = createFeed(sorted_keys, grouped_data)
     print feed
 
-    #
-    # if 0.5 in sorted_keys:
-    #     limInd = sorted_keys.index(0.5)
-    # else:
-    #     limInd = len(sorted_keys)/2
-    #
-    # for i in range(0,100):
-    #     for index, value in enumerate(sorted_keys):
-    #         #print value, index
-    #         if index > limInd:
-    #             #print "breaking..!"
-    #             break;
-    #         ind = getCategoryValueIndex(value, grouped_data, ls.Category.Topwear.value)
-    #         if ind >= 0:
-    #             feed.append(grouped_data[value][ls.Category.Topwear.value][ind])
-    #             #print grouped_data[value][ls.Category.Topwear.value][ind]
-    #             del grouped_data[value][ls.Category.Topwear.value][ind]
-    #
-    #         ind = getCategoryValueIndex(value, grouped_data, ls.Category.Bottomwear.value)
-    #         if ind >= 0:
-    #             feed.append(grouped_data[value][ls.Category.Bottomwear.value][ind])
-    #             #print grouped_data[value][ls.Category.Bottomwear.value][ind]
-    #             del grouped_data[value][ls.Category.Bottomwear.value][ind]
-    #
-    #         ind = getCategoryValueIndex(value, grouped_data, ls.Category.Footwear.value)
-    #         if ind >= 0:
-    #             feed.append(grouped_data[value][ls.Category.Footwear.value][ind])
-    #             #print grouped_data[value][ls.Category.Footwear.value][ind]
-    #             del grouped_data[value][ls.Category.Footwear.value][ind]
-    #
-    #
-    #     if limInd > len(sorted_keys):
-    #         limInd = 0
-    #     else:
-    #         limInd = limInd + 1
-    #
-    # print sorted_keys
-    #
-    # print feed
-
     images = {}
     i=0
     for product in feed:
@@ -261,7 +221,9 @@ def testFeed(userprefs):
         if "Pattern" in product.keys():
             images[i]["Pattern"] = product["Pattern"]
 
+
         i = i+1
+
 
     return {"result": json.dumps(images)}
 
