@@ -124,4 +124,6 @@ from fuzzywuzzy import process
 # print dn.unionDict(nr.types_dict, dn.formatDict(test["Type"]))
 
 v = cdb.getFullDataFromDomain("looksmash_db", "looksmash_women", "ShoppersStop")
-print v[0]
+
+for p in v:
+    print p
