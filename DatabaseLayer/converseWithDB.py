@@ -53,9 +53,12 @@ def printColVals(columnName):
 
 
 def getFullData(dbName, collectionName):
+    print "Reading from DB -> ", dbName, " And Collection -> ", collectionName
     db = client[dbName]
     collection = db[collectionName]
     result = collection.find()
+    for doc in result:
+        print doc
     return result
 
 

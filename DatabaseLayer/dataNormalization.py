@@ -154,8 +154,8 @@ def normalize_data(document, normalization):
 
 doc = { "Category" : "Topwear", "Style" : "", "Sub_category" : "Shirts", "Fit" : "Slim Fit", "Color" : "Coral", "Pattern" : "Checks", "Image" : "https://sslimages2.shoppersstop.com/sys-master/images/hc9/hca/9256894070814/200498152_9601.png_1088Wx1632H?output-format=jpg&background-color=f8f8f8", "Sex" : "Men", "Url" : "https://www.shoppersstop.com/united-colors-of-benetton-mens-full-sleeves-slim-fit-check-casual-shirt/p-200498152", "Length" : "", "Cost" : "2599", "Sleeves" : "Full Sleeves", "Neck" : "", "Product Name" : "Mens Full Sleeves Slim Fit Check Casual Shirt", "Occasion" : "", "Size" : [ "M", "XL" ], "Type" : "Casual Wear", "Brand" : "UNITED COLORS OF BENETTON", "Fabric" : "Cotton" }
 
-test = cdb.getFullData("looksmash_normalization", "normalization")[0]
+#test = cdb.getFullData("looksmash_normalization", "normalization")[0]
 
-print test
+#print test
 
-print normalize_data(doc, test)
+#print normalize_data(doc, test)

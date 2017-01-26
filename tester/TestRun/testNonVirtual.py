@@ -2,7 +2,7 @@ import DatabaseLayer.converseWithDB as cdb
 import DatabaseLayer.converseWithStandards as cstd
 import RuleRepository.looksmashStandards as ls
 import RuleRepository.skinToneRules as sk
-import DatabaseLayer.dataNormalization as dn
+#import DatabaseLayer.dataNormalization as dn
 import random
 import RuleRepository.normalizationRules as nr
 import Services.RatingService as rs
@@ -123,7 +123,6 @@ from fuzzywuzzy import process
 #
 # print dn.unionDict(nr.types_dict, dn.formatDict(test["Type"]))
 
-v = cdb.getFullDataFromDomain("looksmash_db", "looksmash_women", "ShoppersStop")
+#scores = cdb.getFullData("looksmash_rules", "accentuate_women")[0]
 
-for p in v:
-    print p
+#print scores
