@@ -143,11 +143,43 @@ from bson.json_util import dumps
 #     return jsonify(rs.getRatings(record, userprefs))
 #
 
-@app.route('/testdb' , methods=['POST', 'OPTIONS'])
+@app.route('/getFullData' , methods=['POST', 'OPTIONS'])
 @cross_origin()
-def testDB():
+def getFullData():
+    content = request.json
+    print content
+    dbName = content["dbName"]
+    collectionName = content["collectionName"]
 
-    return dumps(cdb.getFullData("looksmash_db", "jabong_data"))
+    return dumps(cdb.getFullData(dbName, collectionName))
+
+
+@app.route('/getFullDataWithColorsAndTypesFromDomain' , methods=['POST', 'OPTIONS'])
+@cross_origin()
+def getFullDataWithColorsAndTypesFromDomain():
+    content = request.json
+    print content
+    dbName = content["dbName"]
+    collectionName = content["collectionName"]
+    domains = content["domains"]
+    colors = content["colors"]
+    types = content["types"]
+
+    return dumps(cdb.getFullDataWithColorsAndTypesFromDomain(dbName, collectionName, domains, colors, types))
+
+
+@app.route('/getFullDataWithColorsAndSubCategoryFromDomain' , methods=['POST', 'OPTIONS'])
+@cross_origin()
+def getFullDataWithColorsAndSubCategoryFromDomain():
+    content = request.json
+    print content
+    dbName = content["dbName"]
+    collectionName = content["collectionName"]
+    domains = content["domains"]
+    colors = content["colors"]
+    subCats = content["subCats"]
+
+    return dumps(cdb.getFullDataWithColorsAndSubCategoryFromDomain(dbName, collectionName, domains, colors, subCats))
 
 
 
