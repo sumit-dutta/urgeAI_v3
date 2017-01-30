@@ -2,7 +2,7 @@
 from pymongo import MongoClient
 
 
-client = MongoClient('52.220.13.79', 27017)
+client = MongoClient('35.154.113.253', 27017)
 
 
 
