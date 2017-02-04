@@ -4,6 +4,7 @@ import operator
 import random
 
 rules = cdb.getFullData("looksmash_rules", "pairing")[0]
+domain = "Jabong"
 
 def getBucket(score):
     if score == 1 or score == .8:
@@ -85,8 +86,8 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
     else:
         dbName = "looksmash_women"
 
-    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], bm_colors, bm_subCats))
-    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], fw_colors, fw_subCats))
+    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, [domain], bm_colors, bm_subCats))
+    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, [domain], fw_colors, fw_subCats))
 
     print "footwear length", len(footwears)
 
@@ -157,8 +158,8 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
     else:
         dbName = "looksmash_women"
 
-    topwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], tp_colors, tp_subCats))
-    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], fw_colors, fw_subCats))
+    topwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, [domain], tp_colors, tp_subCats))
+    footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, [domain], fw_colors, fw_subCats))
 
     sorted_color_pairs = sorted(color_pairs, key=operator.itemgetter('Score'), reverse=True)
     sorted_subcat_pairs = sorted(subcat_pairs, key=operator.itemgetter('Score'), reverse=True)
@@ -224,8 +225,8 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
     else:
         dbName = "looksmash_women"
 
-    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], bm_colors, bm_subCats))
-    topwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, ["ShoppersStop"], tp_colors, tp_subCats))
+    bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, [domain], bm_colors, bm_subCats))
+    topwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, [domain], tp_colors, tp_subCats))
 
 
 
