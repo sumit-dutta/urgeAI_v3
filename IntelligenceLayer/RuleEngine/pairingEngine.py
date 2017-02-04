@@ -74,7 +74,7 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
     bm_colors = list(set([x[ls.Category.Bottomwear.value] for x in color_pairs]))
     fw_colors = list(set([x[ls.Category.Footwear.value] for x in color_pairs]))
 
-
+    print "gender",gender," sub cat",sub_cat
     subcat_pairs = rules[gender][ls.Attributes.Sub_Category.value][ls.Category.Topwear.value][sub_cat]
     bm_subCats = list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs]))
     fw_subCats = list(set([x[ls.Category.Footwear.value] for x in subcat_pairs]))
