@@ -454,7 +454,6 @@ casual_shoes=["Casual Shoes Sole",
             "smart casuals",
             "Smart Casuals Shoe",
             "Smart Casuals",
-            "Casual",
             "Smart Casual"]
 
 lifestyle_shoes=["Lifestyle Shoes"]
@@ -492,8 +491,7 @@ flats=["Flats",
 ballet_flats=["Ballerinas"]
 
 formal_shoes=["Formal Shoes",
-            "Formal Shoes Shoe",
-            "Formal Wear"]
+            "Formal Shoes Shoe"]
 
 boots=["Boots",
         "Boots Shoe"]
