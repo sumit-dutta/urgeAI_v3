@@ -131,17 +131,17 @@ def normalize_data(document, normalization):
     print document
     doc = document
     if 'Color' in document.keys():
-        doc = normalize_color(doc, unionDict(nr.colors_dict,formatDict(normalization["Color"])))
+        doc = normalize_color(doc, formatDict(normalization["Color"]))
     if 'Sleeves' in document.keys():
-        doc = normalize_sleeve(doc, unionDict(nr.sleeves_dict, formatDict(normalization["Sleeves"])))
+        doc = normalize_sleeve(doc, formatDict(normalization["Sleeves"]))
     if 'Neck' in document.keys():
-        doc= normalize_neck(doc, unionDict(nr.necks_dict, formatDict(normalization["Neck"])))
+        doc= normalize_neck(doc, formatDict(normalization["Neck"]))
     if 'Pattern' in document.keys():
-        doc= normalize_pattern(doc, unionDict(nr.patterns_dict, formatDict(normalization["Pattern"])))
+        doc= normalize_pattern(doc, formatDict(normalization["Pattern"]))
     if 'Sub_category' in document.keys():
-        doc= normalize_sub(doc, unionDict(nr.sub_categories_dict, formatDict(normalization["Sub_category_" + getCategorySuffix(doc["Category"])])))
+        doc= normalize_sub(doc, formatDict(normalization["Sub_category_" + getCategorySuffix(doc["Category"])]))
     if 'Type' in document.keys():
-        doc= normalize_type(doc, unionDict(nr.types_dict, formatDict(normalization["Type"])))
+        doc= normalize_type(doc, formatDict(normalization["Type"]))
     print doc
     print "----------------------------end------------------------------------"
     #cdb.replaceDocument("looksmash_db", "looksmash_women", doc)
