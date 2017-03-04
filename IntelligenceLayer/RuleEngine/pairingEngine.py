@@ -4,7 +4,7 @@ import operator
 import random
 
 rules = cdb.getFullData("looksmash_rules", "pairing")[0]
-domain = "Jabong"
+domain = "Abof"
 
 def getBucket(score):
     if score == 1 or score == .8:
