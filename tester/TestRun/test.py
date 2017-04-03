@@ -138,7 +138,7 @@ def testFeed(userprefs):
     colors = userprefs['colors']
     types = userprefs['types']
     skinTone = userprefs['skinTone']
-    domains = ["Abof"]
+    domains = ["MaxFashion"]
 
     if userprefs["gender"] == "Female":
 

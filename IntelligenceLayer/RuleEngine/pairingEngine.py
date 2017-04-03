@@ -4,7 +4,8 @@ import operator
 import random
 
 rules = cdb.getFullData("looksmash_rules", "pairing")[0]
-domain = "Abof"
+domain = "MaxFashion"
+singleBMs = ["Skirts"]
 
 def getBucket(score):
     if score == 1 or score == .8:
@@ -187,18 +188,28 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
             print len(sl_tps), len(sl_fws)
 
 
-
-            for i in range(0, min(len(sl_tps), len(sl_fws))):
-                value = {}
-                if '_id' in sl_fws[i].keys():
-                    del sl_fws[i]['_id']
-                if '_id' in sl_tps[i].keys():
-                    del sl_tps[i]['_id']
-                value["Topwear"] = sl_tps[i]
-                value["Footwear"] = sl_fws[i]
-                value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_tps[i], sl_fws[i], gender, rules[gender]["Pattern"][ls.Category.Bottomwear.value], pattern)
-                final.append(value)
-                print "entry", value
+            if sub_cat in singleBMs:
+                for i in range(0, len(sl_fws)):
+                    value = {}
+                    if '_id' in sl_fws[i].keys():
+                        del sl_fws[i]['_id']
+                    value["Topwear"] = ""
+                    value["Footwear"] = sl_fws[i]
+                    value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"])
+                    final.append(value)
+                    print "entry", value
+            else:
+                for i in range(0, min(len(sl_tps), len(sl_fws))):
+                    value = {}
+                    if '_id' in sl_fws[i].keys():
+                        del sl_fws[i]['_id']
+                    if '_id' in sl_tps[i].keys():
+                        del sl_tps[i]['_id']
+                    value["Topwear"] = sl_tps[i]
+                    value["Footwear"] = sl_fws[i]
+                    value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_tps[i], sl_fws[i], gender, rules[gender]["Pattern"][ls.Category.Bottomwear.value], pattern)
+                    final.append(value)
+                    print "entry", value
 
 
 
