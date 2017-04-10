@@ -82,7 +82,9 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
     bm_subCats = list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs]))
     fw_subCats = list(set([x[ls.Category.Footwear.value] for x in subcat_pairs]))
 
+    print "====================>"
     print fw_subCats
+    print bm_subCats
 
     if gender == "Male":
         dbName = "looksmash_men"
@@ -100,7 +102,7 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
     final = []
 
 
-    print sorted_color_pairs
+    #print sorted_color_pairs
 
     for color_pair in sorted_color_pairs:
         #print color_pair
@@ -117,8 +119,8 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
             sl_bms = [bm for bm in colored_bms if bm['Sub_category'] == subcat_pair['Bottomwear']]
             sl_fws = [fw for fw in colored_fws if fw['Sub_category'] == subcat_pair['Footwear']]
 
-            print color_pair, subcat_pair
-            print len(sl_bms), len(sl_fws)
+            #print color_pair, subcat_pair
+            #print len(sl_bms), len(sl_fws)
 
 
 
@@ -129,13 +131,13 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
                     del sl_bms[i]['_id']
                 if '_id' in sl_fws[i].keys():
                     del sl_fws[i]['_id']
-                print sl_bms[i]
-                print sl_fws[i]
+               # print sl_bms[i]
+               # print sl_fws[i]
                 value["Bottomwear"] = sl_bms[i]
                 value["Footwear"] = sl_fws[i]
                 value["Score"] = (float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_bms[i], sl_fws[i], gender, rules[gender]["Pattern"][ls.Category.Topwear.value], pattern))/3
                 final.append(value)
-                print "entry", value
+                #print "entry", value
 
 
 
@@ -230,8 +232,11 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
 
 
     subcat_pairs = rules[gender][ls.Attributes.Sub_Category.value][ls.Category.Footwear.value][sub_cat]
-    bm_subCats = list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs]))
-    tp_subCats = list(set([x[ls.Category.Topwear.value] for x in subcat_pairs]))
+    bm_subCats = filter(None,list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs])))
+    tp_subCats = filter(None,list(set([x[ls.Category.Topwear.value] for x in subcat_pairs])))
+
+    print bm_subCats
+    print tp_subCats
 
     if gender == "Male":
         dbName = "looksmash_men"
@@ -249,7 +254,7 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
     final = []
 
 
-    print sorted_color_pairs
+    #print sorted_color_pairs
 
     for color_pair in sorted_color_pairs:
         #print color_pair
@@ -266,8 +271,8 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
             sl_bms = [bm for bm in colored_bms if bm['Sub_category'] == subcat_pair['Bottomwear']]
             sl_tps = [tp for tp in colored_tps if tp['Sub_category'] == subcat_pair['Topwear']]
 
-            print color_pair, subcat_pair
-            print len(sl_bms), len(sl_tps)
+            #print color_pair, subcat_pair
+            #print len(sl_bms), len(sl_tps)
 
 
 
@@ -281,11 +286,11 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
                 value["Topwear"] = sl_tps[i]
                 value["Score"] = (float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_tps[i], sl_bms[i], gender, rules[gender]["Pattern"][ls.Category.Footwear.value], pattern))/3
                 final.append(value)
-                print "entry", value
+                #print "entry", value
 
 
 
-    print final
+  #  print final
     sorted_final = sorted(final, key=operator.itemgetter('Score'), reverse=True)
     return createPairFeed(sorted_final)
 
