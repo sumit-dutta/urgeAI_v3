@@ -56,11 +56,13 @@ def getRatings(record, userPrefs):
         print "A", accentuate
         print "H", hide
         bodyType = 0.6 *accentuate + 0.4*hide
-        overall = float(bodyType + skinTone)/2
+        overall =  max(.3,float(bodyType + skinTone)/2)
+        message = getRatingMessage(overall)
 
         ratings["overall"] = overall
         ratings["body type"] = bodyType
         ratings["skin tone"] = skinTone
+        ratings["message"] = message
 
         return ratings
 
