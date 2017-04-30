@@ -8,11 +8,11 @@ high = ["Wow! This will look great on you.",
     "The perfect product to complement your style.",
     "Put your most stylish foot forward with this product.",
     "You have a good eye for style.",
-    "Nice! You know how to pick em’.",
+    "Nice! You know how to pick em'.",
     "Looks like you have your personal style all figured out.",
-    "You’re going to make all the right moves in this product."
+    "You're going to make all the right moves in this product."
     "We love this product for you!",
-    "Oh! You’re going to look smooth in this." ]
+    "Oh! You're going to look smooth in this." ]
 
 medium = ["Good choice, you sure have style.",
     "The perfect product to complement your style.",
@@ -20,7 +20,7 @@ medium = ["Good choice, you sure have style.",
     "A good piece to add to your wardrobe.",
     "This choice has great fashion potential",
     "You can mix and match this with ease.",
-    "You’re going to look great in this.",
+    "You're going to look great in this.",
     "You have the perfect product now to find an occasion."]
 
 low = ["Find something that will match your style.",
@@ -28,7 +28,7 @@ low = ["Find something that will match your style.",
     "A different product might be better suited for you.",
     "Try something in a different colour.",
     "Perfect clothes are hard to find sometimes.",
-    "Hmm…looks like this isn’t the one.",
+    "Hmm.. looks like this isn't the one.",
     "This might not be the best choice for you.",
     "Oh no! Try another product, it might be a better match to your style."   ]
 
