@@ -41,13 +41,13 @@ def getMessage(list):
 
 def getRatingMessage(score):
     message = ""
-    if score >= .65:
+    if score >= .7:
         message = getMessage(high)
 
-    if score >= .4 and score < .65:
+    if score >= .5 and score < .7:
         message = getMessage(medium)
 
-    if score < .4:
+    if score < .5:
         message = getMessage(low)
 
     return message
