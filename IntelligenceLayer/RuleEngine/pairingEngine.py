@@ -4,7 +4,7 @@ import operator
 import random
 
 rules = cdb.getFullData("looksmash_rules", "pairing")[0]
-domain = "MaxFashion"
+domain = "Jabong"
 singleBMs = ["Skirts"]
 
 def getBucket(score):
