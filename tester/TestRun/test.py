@@ -170,7 +170,7 @@ def testFeed(userprefs):
         colorScore, colorMsg = re.computeColorScores(doc, colors)
         skinToneScore, skinToneMsg = re.computeSkinToneScores(doc,skinTone,colors)
 
-        print accentuateScore, hideScore, colorScore, skinToneScore
+        #print accentuateScore, hideScore, colorScore, skinToneScore
 
         doc['score'] = accentuateWeight*(accentuateScore + hideScore) + colorWeight*colorScore + skinToneWeight*skinToneScore
         doc['msg'] = me.getMsg(accentuateMsg + colorMsg + skinToneMsg)
@@ -194,7 +194,7 @@ def testFeed(userprefs):
     sorted_keys.sort(reverse=True)
 
     feed = createFeed(sorted_keys, grouped_data)
-    print feed
+    #print feed
 
     images = {}
     i=0

@@ -28,7 +28,7 @@ def createPairFeed(sorted_final):
     sorted_keys = grouped_data.keys()
     sorted_keys.sort(reverse=True)
 
-    print "==================>",sorted_keys
+    #print "==================>",sorted_keys
 
     pairFeed = []
     for score in sorted_keys:
@@ -77,14 +77,14 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
     bm_colors = list(set([x[ls.Category.Bottomwear.value] for x in color_pairs]))
     fw_colors = list(set([x[ls.Category.Footwear.value] for x in color_pairs]))
 
-    print "gender",gender," sub cat",sub_cat
+    #print "gender",gender," sub cat",sub_cat
     subcat_pairs = rules[gender][ls.Attributes.Sub_Category.value][ls.Category.Topwear.value][sub_cat]
     bm_subCats = list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs]))
     fw_subCats = list(set([x[ls.Category.Footwear.value] for x in subcat_pairs]))
 
-    print "====================>"
-    print fw_subCats
-    print bm_subCats
+    #print "====================>"
+    #print fw_subCats
+    #print bm_subCats
 
     if gender == "Male":
         dbName = "looksmash_men"
@@ -94,7 +94,7 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
     bottomwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, [domain], bm_colors, bm_subCats))
     footwears = list(cdb.getFullDataWithColorsAndSubCategoryFromDomain("looksmash_db", dbName, [domain], fw_colors, fw_subCats))
 
-    print "footwear length", len(footwears)
+    #print "footwear length", len(footwears)
 
     sorted_color_pairs = sorted(color_pairs, key=operator.itemgetter('Score'), reverse=True)
     sorted_subcat_pairs = sorted(subcat_pairs, key=operator.itemgetter('Score'), reverse=True)
@@ -141,7 +141,7 @@ def pairProductTopwear(gender, color, pattern, sub_cat, rules):
 
 
 
-    print final
+    #print final
     sorted_final = sorted(final, key=operator.itemgetter('Score'), reverse=True)
     return createPairFeed(sorted_final)
 
@@ -172,7 +172,7 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
     final = []
 
 
-    print sorted_color_pairs
+    #print sorted_color_pairs
 
     for color_pair in sorted_color_pairs:
         #print color_pair
@@ -188,8 +188,8 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
             sl_tps = [tp for tp in colored_tps if tp['Sub_category'] == subcat_pair['Topwear']]
             sl_fws = [fw for fw in colored_fws if fw['Sub_category'] == subcat_pair['Footwear']]
 
-            print color_pair, subcat_pair
-            print len(sl_tps), len(sl_fws)
+            #print color_pair, subcat_pair
+            #print len(sl_tps), len(sl_fws)
 
 
             if sub_cat in singleBMs:
@@ -201,7 +201,7 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
                     value["Footwear"] = sl_fws[i]
                     value["Score"] = float(color_pair["Score"]) + float(subcat_pair["Score"])
                     final.append(value)
-                    print "entry", value
+                    #print "entry", value
             else:
                 for i in range(0, min(len(sl_tps), len(sl_fws))):
                     value = {}
@@ -213,11 +213,11 @@ def pairProductBottomwear(gender, color, pattern, sub_cat, rules):
                     value["Footwear"] = sl_fws[i]
                     value["Score"] = (float(color_pair["Score"]) + float(subcat_pair["Score"]) + getPatternScore(sl_tps[i], sl_fws[i], gender, rules[gender]["Pattern"][ls.Category.Bottomwear.value], pattern))/3
                     final.append(value)
-                    print "entry", value
+                    #print "entry", value
 
 
 
-    print final
+    #print final
     sorted_final = sorted(final, key=operator.itemgetter('Score'), reverse=True)
     return createPairFeed(sorted_final)
 
@@ -235,8 +235,8 @@ def pairProductFootwear(gender, color, pattern, sub_cat, rules):
     bm_subCats = filter(None,list(set([x[ls.Category.Bottomwear.value] for x in subcat_pairs])))
     tp_subCats = filter(None,list(set([x[ls.Category.Topwear.value] for x in subcat_pairs])))
 
-    print bm_subCats
-    print tp_subCats
+    #print bm_subCats
+    #print tp_subCats
 
     if gender == "Male":
         dbName = "looksmash_men"

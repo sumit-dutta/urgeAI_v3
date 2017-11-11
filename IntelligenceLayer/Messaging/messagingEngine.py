@@ -20,4 +20,4 @@ messages.update(dict.fromkeys([""], ["Try Something New"]))
 def getMsg(msgCode):
     return messages[msgCode]
 
-print messages
+#print messages

@@ -21,7 +21,7 @@ def computeScore(record, rules, scores, preference, bodyPart):
             recordAttr = record[attr]
             if isinstance(record[attr], list):
                 recordAttr = record[attr][0]
-            print scores[bodyPart][recordAttr]
+            #print scores[bodyPart][recordAttr]
             score = score + float(scores[bodyPart][recordAttr])
             count = count + 1
             #print attr, score
@@ -86,7 +86,7 @@ def computeAccentuateScores(record, userPrefs, scores = rp.scores, rules = rp.ru
 
 
 def computeHideScores(record, userPrefs, scores = rp.scores):
-    print scores
+    #print scores
     score  = 0
 
     if userPrefs["hide"]["arms"]:
